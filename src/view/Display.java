@@ -24,11 +24,15 @@ import pieces.Piece;
 public class Display extends JFrame{
 
 	private JPanel container = new JPanel();
+	
 	//Un bouton par case de l'échiquier
 	JButton[][] cells = new JButton[8][8];
+	
 	private JMenuBar menuBar = new JMenuBar();
+	
 	JMenu game = new JMenu("Game"),
-	    help = new JMenu("Help");
+	      help = new JMenu("Help");
+	
 	 JMenuItem   newGame = new JMenuItem("New Game"),
 	    leave = new JMenuItem("Leave"),
 	    logs = new JMenuItem("Logs");
@@ -51,6 +55,13 @@ public class Display extends JFrame{
 	}
 
 	private void initMenu() {
+		
+	    leave.addActionListener(new ActionListener(){
+	        public void actionPerformed(ActionEvent arg0) {
+	          System.exit(0);
+	        }      
+	      });
+	    
 		game.add(newGame);
 	    game.addSeparator();
 	    game.add(leave);	    
@@ -60,7 +71,9 @@ public class Display extends JFrame{
 	    menuBar.add(game);
 	    menuBar.add(help);
 	}
+	
 	private void initDisplay() {
+		
 		// TODO Auto-generated method stub
 		GridBagLayout gl = new GridBagLayout();
 		//L'objet servant à positionner les composants
@@ -99,6 +112,12 @@ public class Display extends JFrame{
 	}
 	
 	private void refreshDisplay(Plate gamePlate) {
+		
 		Piece[][] pieces = gamePlate.getPlate();
+		
+		
+		
+		
+		
 	}
 }

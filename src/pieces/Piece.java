@@ -15,8 +15,12 @@ public abstract class Piece {
 	private int m_column;
 	
 	abstract ArrayList<Piece> accessibleCells(Plate plate);
-
 	
+	abstract public void show();
+	
+	abstract public Icon getIcon();
+
+
 	public boolean isOnScreen() {
 		if(m_row > 0 && m_row <= 7 && m_column > 0 && m_column <= 7){
 			return true;
@@ -78,11 +82,5 @@ public abstract class Piece {
 		m_row=row;
 		m_column=col;
 	}
-	
-	public Icon getIcon() {
-		ImageIcon img = new ImageIcon("img/wpawn.png");
-		return img;
-	}
-
 	
 }

@@ -75,6 +75,18 @@ public abstract class Piece {
 	}
 
 
+<<<<<<< HEAD
+=======
+	public void setPosition(int row, int col) {
+		m_row=row;
+		m_column=col;
+	}
+	
+	public Icon getIcon() {
+		ImageIcon img = new ImageIcon("img/wpawn.png");
+		return img;
+	}
+>>>>>>> 37d10e502f83b9fba32a9a7fe0657a8d711fa7fb
 
 
 	

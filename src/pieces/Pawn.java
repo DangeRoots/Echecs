@@ -4,6 +4,9 @@ import game.Plate;
 
 import java.util.ArrayList;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 public class Pawn extends Piece {
 
 	@Override
@@ -63,6 +66,26 @@ public class Pawn extends Piece {
 	boolean move(Piece piece) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public void show(){
+		System.out.println("Je suis un pion ! et ma position est : "+getRow() + " " + getColumn());
+	}
+
+	@Override
+	public Icon getIcon() {
+		
+		if (this.getColor()=="w")
+		{
+			Icon img = new ImageIcon("./img/wpawn.png");
+			return img;
+		}
+		else {
+			Icon img = new ImageIcon("./img/bpawn.png");
+			return img;
+		}
+
+		
 	}
 
 }

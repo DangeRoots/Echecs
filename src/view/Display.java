@@ -24,18 +24,19 @@ import pieces.Piece;
 public class Display extends JFrame{
 
 	private JPanel container = new JPanel();
+	GridBagLayout gl = new GridBagLayout();
+	//L'objet servant à positionner les composants
+	GridBagConstraints gbc = new GridBagConstraints();
 	
 	//Un bouton par case de l'échiquier
 	JButton[][] cells = new JButton[8][8];
 	
 	private JMenuBar menuBar = new JMenuBar();
 	
-	JMenu game = new JMenu("Game"),
-	      help = new JMenu("Help");
+	JMenu game = new JMenu("Game");
 	
 	 JMenuItem   newGame = new JMenuItem("New Game"),
-	    leave = new JMenuItem("Leave"),
-	    logs = new JMenuItem("Logs");
+	    leave = new JMenuItem("Leave");
 
 
 	public Display(){
@@ -66,10 +67,7 @@ public class Display extends JFrame{
 	    game.addSeparator();
 	    game.add(leave);	    
 	    
-	    help.add(logs);
-	    
 	    menuBar.add(game);
-	    menuBar.add(help);
 	}
 	
 	private void initDisplay() {
@@ -113,11 +111,37 @@ public class Display extends JFrame{
 	
 	private void refreshDisplay(Plate gamePlate) {
 		
+		int i=0;
+		int j=0;
+		
 		Piece[][] pieces = gamePlate.getPlate();
 		
-		
-		
-		
+		for (JButton[] cellLine : cells) {
+			i++;
+			for (JButton cell : cellLine) {
+				j++;
+				cell = new JButton();
+				cell.setPreferredSize(new Dimension(90, 90));
+				cell.setIcon(pieces[i][j].getIcon());
+				if (gbc.gridx % 2 == 0){
+					if (gbc.gridy %2 == 0) {
+						cell.setBackground(Color.white);
+					}
+					else cell.setBackground(Color.black);
+				}
+				else {
+
+					if (gbc.gridy %2 == 0) {
+						cell.setBackground(Color.black);
+					}
+					else cell.setBackground(Color.white);				
+				}
+				container.add(cell, gbc);
+				gbc.gridy ++;
+			}
+			gbc.gridx ++;
+			gbc.gridy = 0;
+		}
 		
 	}
 }

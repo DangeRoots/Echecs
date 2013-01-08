@@ -18,4 +18,5 @@ public class Plate {
 	{
 		return plate[x][y];
 	}
+	
 }

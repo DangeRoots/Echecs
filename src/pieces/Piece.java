@@ -2,7 +2,11 @@ package pieces;
 
 import game.Plate;
 
+import java.awt.Image;
 import java.util.ArrayList;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 public abstract class Piece {
 
@@ -69,6 +73,8 @@ public abstract class Piece {
 		position[1]=this.m_column;
 		return position;
 	}
+
+
 
 
 	

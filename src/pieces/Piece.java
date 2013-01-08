@@ -4,6 +4,9 @@ import game.Plate;
 
 import java.util.ArrayList;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 public abstract class Piece {
 
 	private String m_color;
@@ -68,6 +71,17 @@ public abstract class Piece {
 		position[0]=this.m_row;
 		position[1]=this.m_column;
 		return position;
+	}
+
+
+	public void setPosition(int row, int col) {
+		m_row=row;
+		m_column=col;
+	}
+	
+	public Icon getIcon() {
+		ImageIcon img = new ImageIcon("img/wpawn.png");
+		return img;
 	}
 
 

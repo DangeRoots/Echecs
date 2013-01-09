@@ -138,8 +138,12 @@ public class Game {
 	}
 
 	// Méthode initialisant le jeu : joueurs + pièces, joueur actif
-	public static void initGame(Plate plateau)
+	public static Plate initGame()
 	{
+		
+		/** @TODO
+		 * Remettre les cases à leur couleur de base
+		 */
 		g_plateau = new Plate();
 		g_bcheck = false;
 		g_wcheck = false;
@@ -151,6 +155,7 @@ public class Game {
 		
 		active_player = p_white;
 		g_ended = false;
+		return g_plateau;
 	}
 	
 	/* Méthode appelée à la fin d'un tour de jeu :
@@ -199,9 +204,11 @@ public class Game {
 		{
 			active_player = p_white;
 		}
+		System.out.println("Nouveau joueur : " + active_player.getM_name());
+
 	}
 	
-	public boolean isClickable(Piece clicked_piece)
+	public static boolean isClickable(Piece clicked_piece)
 	{
 		if (clicked_piece.getColor() == active_player.getM_color())
 		{
@@ -218,9 +225,9 @@ public class Game {
 	{
 		g_window = new Display();
 		
-		initGame(g_plateau);
+		initGame();
 		
-		g_window.refreshDisplay(g_plateau);
+	//	g_window.refreshDisplay(g_plateau);
 		
 		/*	Déroulement d'un tour de jeu
 		 * 	Initialisation du nouveau tour 			-> beginNewTurn()

@@ -7,36 +7,19 @@ import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-public class Rook extends Piece {
+public class Empty extends Piece {
 
 	@Override
 	ArrayList<Piece> accessibleCells(Plate plate) {
-
-		ArrayList<Piece> accessibles = new ArrayList();
-		// Cas d'une piece morte
-		if(!this.isOnScreen()){
-			return null;
-		}
+		// TODO Auto-generated method stub
 		return null;
 	}
+	
 
 	@Override
 	boolean canMove(Piece piece) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public Icon getIcon() {
-		if (this.getColor()=="w")
-		{
-			Icon img = new ImageIcon("./img/wrook.png");
-			return img;
-		}
-		else {
-			Icon img = new ImageIcon("./img/brook.png");
-			return img;
-		}
 	}
 
 	@Override
@@ -47,8 +30,14 @@ public class Rook extends Piece {
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Je suis un empty ! et ma position est : " + getRow() + " " + getColumn());
+	}
+
+
+	@Override
+	public Icon getIcon() {
+		Icon img = new ImageIcon("");
+		return img;
 	}
 
 }

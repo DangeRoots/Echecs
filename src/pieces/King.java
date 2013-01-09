@@ -80,7 +80,7 @@ public class King extends Piece{
 
 	@Override
 	public void show() {
-		System.out.println("Je suis un roi ! et ma position est : " + getRow() + " " + getColumn());		
+		//System.out.println("Je suis un roi ! et ma position est : " + getRow() + " " + getColumn());		
 	}
 
 }

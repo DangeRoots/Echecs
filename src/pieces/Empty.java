@@ -30,7 +30,7 @@ public class Empty extends Piece {
 
 	@Override
 	public void show() {
-		System.out.println("Je suis un empty ! et ma position est : " + getRow() + " " + getColumn());
+		//System.out.println("Je suis un empty ! et ma position est : " + getRow() + " " + getColumn());
 	}
 
 

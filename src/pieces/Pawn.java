@@ -70,7 +70,7 @@ public class Pawn extends Piece {
 	}
 	
 	public void show(){
-		System.out.println("Je suis un pion ! et ma position est : "+getRow() + " " + getColumn());
+		//System.out.println("Je suis un pion ! et ma position est : "+getRow() + " " + getColumn());
 	}
 
 	@Override

@@ -11,7 +11,41 @@ import pieces.Queen;
 import pieces.Rook;
 import view.Display;
 
+
+/**
+ * 	Utilisation de la classe Game par l'interface graphique 
+ * 		
+ * 		Appel à isClickable (Piece piece_cliquée) renvoie un booléen, vrai si la pièce est de la couleur du joueur actif, faux sinon
+ * 		Appel à endTurn() une fois un déplacement effectué -> pas de retour, permet le passage au tour suivant par le jeu
+ * 
+ */
 public class Game {
+	
+	static Player active_player;
+	static Player p_white;
+	static Player p_black;
+	static boolean g_ended;
+	static Display g_window;
+	static Plate g_plateau;
+	static boolean g_wcheck;
+	static boolean g_bcheck;
+	
+		
+	public static Player getP_white() {
+		return p_white;
+	}
+
+	public static Player getP_black() {
+		return p_black;
+	}
+
+	public static boolean isG_wcheck() {
+		return g_wcheck;
+	}
+
+	public static boolean isG_bcheck() {
+		return g_bcheck;
+	}
 
 	// Méthode instanciant les 16 pièces du joueur et les plaçant sur le plateau de jeu
 	public static void givePiecesToPlayer(Player play, Plate plateau)
@@ -103,24 +137,102 @@ public class Game {
 
 	}
 
-	// Méthode initialisant le jeu : joueurs + pièces
+	// Méthode initialisant le jeu : joueurs + pièces, joueur actif
 	public static void initGame(Plate plateau)
 	{
-		Player p_white = new Player("White Player", "w");
-		Player p_black = new Player("Black Player", "b");
-
-		givePiecesToPlayer(p_white, plateau);
-		givePiecesToPlayer(p_black, plateau);
+		g_plateau = new Plate();
+		g_bcheck = false;
+		g_wcheck = false;
+		p_white = new Player("White Player", "w");
+		p_black = new Player("Black Player", "b");
+		
+		givePiecesToPlayer(p_white, g_plateau);
+		givePiecesToPlayer(p_black, g_plateau);
+		
+		active_player = p_white;
+		g_ended = false;
 	}
+	
+	/* Méthode appelée à la fin d'un tour de jeu :
+	 * 		Passage d'active_player au joueur suivant
+	 * 		A implémenter plus tard dans cette méthode :
+	 * 			Vérification des échecs
+	 * 			Promotion
+	 * 			Pat
+	 * 			Gestion du compteur Blitz
+	 * 
+	 */
+	public static void endTurn()
+	{	
+		/*
+		 * 	Ensemble des vérifications de fin de tour à implémenter : 
+		 * 	échecs, promotions, etc...
+		 */
+		if (!g_ended) 
+		{
+			beginNewTurn();
+		}
+		else 
+		{
+			endGame();
+		}
+	}
+	
+	//Méthode appelée lorsque la partie est terminée
+	public static void endGame()
+	{
+		
+	}
+	
+	/*
+	 * Corps de méthode pour la gestion de :
+	 * 		Compteur Blitz
+	 * 		Autres événements de début de tour
+	 */
+	public static void beginNewTurn()
+	{
+		if (active_player == p_white)
+		{
+			active_player = p_black;
+		}
+		else 
+		{
+			active_player = p_white;
+		}
+	}
+	
+	public boolean isClickable(Piece clicked_piece)
+	{
+		if (clicked_piece.getColor() == active_player.getM_color())
+		{
+			return true;
+		}
+		else 
+		{
+			return false;
+		}
+	}
+	
+	
 	public static void main (String args[])
 	{
-		Display window = new Display();
+		g_window = new Display();
+		
+		initGame(g_plateau);
+		
+		g_window.refreshDisplay(g_plateau);
+		
+		/*	Déroulement d'un tour de jeu
+		 * 	Initialisation du nouveau tour 			-> beginNewTurn()
+		 * 	Passage de la main à la partie graphique
+		 * 		-> Vérification du "bon joueur" 	-> appel à isClickable (Piece piece_cliquée)
+		 * 	Appel par la partie graphique de endTurn() une fois le déplacement validé et effectué
+		 * 	Appel après les opérations d'endTurn() de : 
+		 * 			-> beginNewTurn() et passage au tour suivant.
+		 * 			-> ou endGame() dans le cas où la partie s'est terminée au cours du dernier tour.
+		 */
+		
 
-		Plate plateau = new Plate();
-
-		initGame(plateau);
-
-		window.refreshDisplay(plateau);
 
 	}
 }

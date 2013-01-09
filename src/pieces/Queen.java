@@ -11,13 +11,24 @@ public class Queen extends Piece {
 
 	@Override
 	ArrayList<Piece> accessibleCells(Plate plate) {
-
-		ArrayList<Piece> accessibles = new ArrayList();
+		ArrayList<Piece> accessibles = new ArrayList<Piece>();
 		// Cas d'une piece morte
 		if(!this.isOnScreen()){
 			return null;
 		}
-		return null;
+		else{
+			Rook rook = new Rook();
+			ArrayList<Piece> accessRook = new ArrayList<Piece>();
+			accessRook=rook.accessibleCells(plate);
+			for (int i = 0; i < accessRook.size();i++)
+				accessibles.add(accessRook.get(i));
+			Bishop bishop = new Bishop();
+			ArrayList<Piece> accessBishop = new ArrayList<Piece>();
+			accessBishop=bishop.accessibleCells(plate);
+			for (int i = 0; i < accessBishop.size();i++)
+				accessibles.add(accessBishop.get(i));
+			return accessibles;
+		}
 	}
 
 	@Override

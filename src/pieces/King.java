@@ -1,11 +1,8 @@
 package pieces;
 
-import game.Cell;
 import game.Plate;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -23,32 +20,29 @@ public class King extends Piece{
 			int y = this.getColumn();
 			System.out.println(" x : " + x + " y : "+y);
 			//Sud
-			if (x < 7 && plate.getPiece(y, x+1).getColor()!=this.getColor())
-			{
-				System.out.println(plate.getPiece(y, x+1).getRow());
-				accessibles.add(plate.getPiece(y, x+1));
-			}
-//			//Nord
-//			if (x > 0 && plate.getPiece(y, x-1).getColor()!= this.getColor())
-//				accessibles.add(plate.getPiece(y, x-1));
-//			//Droite
-//			if (y < 7 && plate.getPiece(x, y+1).getColor()!=this.getColor())
-//				accessibles.add(plate.getPiece(x, y+1));
-//			//Gauche
-//			if (y > 0 && plate.getPiece(x, y-1).getColor()!=this.getColor())
-//				accessibles.add(plate.getPiece(x, y-1));
-//			//Haut-Droite
-//			if (x < 7 && y < 7 && plate.getPiece(x+1, y+1).getColor()!=this.getColor())
-//				accessibles.add(plate.getPiece(x+1, y+1));
-//			//Haut-Gauche
-//			if (x < 7 && y > 0 && plate.getPiece(x+1, y-1).getColor()!=this.getColor())
-//				accessibles.add(plate.getPiece(x+1, y-1));
-//			//Bas-Droite
-//			if (x > 0 && y < 7 && plate.getPiece(x-1, y+1).getColor()!=this.getColor())
-//				accessibles.add(plate.getPiece(x-1, y+1));
-//			//Bas-Gauche
-//			if (x > 0 && y > 0 && plate.getPiece(x-1, y-1).getColor()!=this.getColor())
-//				accessibles.add(plate.getPiece(x-1, y-1));			
+			if (x < 7 && plate.getPiece(x+1, y).getColor()!=this.getColor())
+				accessibles.add(plate.getPiece(x+1, y));
+			//Nord
+			if (x > 0 && plate.getPiece(x-1, y).getColor()!= this.getColor())
+				accessibles.add(plate.getPiece(x-1, y));
+			//Est
+			if (y < 7 && plate.getPiece(x, y+1).getColor()!=this.getColor())
+				accessibles.add(plate.getPiece(x, y+1));
+//			//Ouest
+			if (y > 0 && plate.getPiece(x, y-1).getColor()!=this.getColor())
+				accessibles.add(plate.getPiece(x, y-1));
+//			//Sud Est
+			if (x < 7 && y < 7 && plate.getPiece(x+1, y+1).getColor()!=this.getColor())
+				accessibles.add(plate.getPiece(x+1, y+1));
+//			//Sud Ouest
+			if (x < 7 && y > 0 && plate.getPiece(x+1, y-1).getColor()!=this.getColor())
+				accessibles.add(plate.getPiece(x+1, y-1));
+//			//Nord Est
+			if (x > 0 && y < 7 && plate.getPiece(x-1, y+1).getColor()!=this.getColor())
+				accessibles.add(plate.getPiece(x-1, y+1));
+//			//Nord Ouest
+			if (x > 0 && y > 0 && plate.getPiece(x-1, y-1).getColor()!=this.getColor())
+				accessibles.add(plate.getPiece(x-1, y-1));			
 			return accessibles;
 		}
 	}

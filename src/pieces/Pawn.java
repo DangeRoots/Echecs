@@ -12,7 +12,7 @@ public class Pawn extends Piece {
 	@Override
 	ArrayList<Piece> accessibleCells(Plate plate) {
 
-		ArrayList<Piece> accessibles = new ArrayList();
+		ArrayList<Piece> accessibles = new ArrayList<Piece>();
 		// Cas d'une piece morte
 		if(!this.isOnScreen()){
 			return null;
@@ -21,12 +21,12 @@ public class Pawn extends Piece {
 			int x = this.getRow();
 			int y = this.getColumn();
 
-			//  deplacement blanc
+			//Cas d'une piece blanche
 			if(this.getColor() == "w") {			
 				// premier deplacement = 2 cases
 				if(x == 6 && plate.getPiece(x-1, y).getColor()=="e" && plate.getPiece(x-2, y).getColor()=="e")
 					accessibles.add(plate.getPiece(x-2, y));
-				// deplacement normal blanc
+				// deplacement normal
 				if (x > 0 && plate.getPiece(x-1, y).getColor()=="e")
 					accessibles.add(plate.getPiece(x-1, y));
 				//diagonale gauche
@@ -37,11 +37,12 @@ public class Pawn extends Piece {
 					accessibles.add(plate.getPiece(x-1, y+1));
 			}
 
-			// deplacement normal noir
+			//Cas d'une piece noire
 			if(this.getColor() == "b") {
 				// premier deplacement
 				if( x == 1 && plate.getPiece(x+1, y).getColor()=="e" && plate.getPiece(x+2, y).getColor()=="e")					
 					accessibles.add(plate.getPiece(x+2, y));
+				// deplacement normal
 				if(x < 7 && plate.getPiece(x+1,y).getColor()=="e")
 					accessibles.add(plate.getPiece(x+1, y));
 				//diagonale gauche

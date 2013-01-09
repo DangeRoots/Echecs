@@ -11,13 +11,78 @@ public class Bishop extends Piece {
 
 	@Override
 	ArrayList<Piece> accessibleCells(Plate plate) {
-
-		ArrayList<Piece> accessibles = new ArrayList();
+		ArrayList<Piece> accessibles = new ArrayList<Piece>();
 		// Cas d'une piece morte
 		if(!this.isOnScreen()){
 			return null;
 		}
-		return null;
+		else{
+			int x = this.getRow();
+			int y = this.getColumn();
+			//Nord Est
+			for (int i = x+1; i < 8;i++)
+				for (int j = y+1; j < 8; j++)
+				{
+					if (plate.getPiece(i, j).getColor()==this.getColor())
+						i = j = 8;
+					else
+					{
+						accessibles.add(plate.getPiece(i, y));
+						if (plate.getPiece(i, j).getColor()!="e")
+							i = j = 8;
+					}
+				}
+			//Nord Ouest
+			for (int i = x+1; i < 8;i++)
+				for (int j = y-1; j > 0; j--)
+				{
+					if (plate.getPiece(i, j).getColor()==this.getColor())
+					{
+						i = 8;
+						j = -1;
+					}
+					else
+					{
+						accessibles.add(plate.getPiece(i, y));
+						if (plate.getPiece(i, j).getColor()!="e")
+							i = 8;
+							j = -1;
+					}
+				}
+			//Sud Ouest
+			for (int i = x-1; i > 0; i--)
+				for (int j = y-1 ;j > 0; j--)
+				{
+					if (plate.getPiece(i, j).getColor()==this.getColor())
+					{
+						i = j = -1;
+					}
+					else
+					{
+						accessibles.add(plate.getPiece(i, y));
+						if (plate.getPiece(i, j).getColor()!="e")
+							i = j = -1;
+					}
+				}
+			//Sud Est
+			for (int i = x-1; i > 0;i--)
+				for (int j = y+1; j < 8; j++)
+				{
+					if (plate.getPiece(i, j).getColor()==this.getColor())
+					{
+						j = 8;
+						i = -1;
+					}
+					else
+					{
+						accessibles.add(plate.getPiece(i, y));
+						if (plate.getPiece(i, j).getColor()!="e")
+							j = 8;
+							i =-1;
+					}
+				}
+			return accessibles;
+		}
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package view;
 import game.Plate;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,6 +9,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener; 
+import java.util.ArrayList;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,41 +23,64 @@ import javax.swing.JPanel;
 
 import pieces.Empty;
 import pieces.Piece;
+
+/*--------------------------------------------------------------------------------------------------------------------------------------------
+# Interface Graphique
+# Affichage de l'ecran de jeux.
+--------------------------------------------------------------------------------------------------------------------------------------------*/
+
 public class Display extends JFrame{
 
+	// container de la fenetre et barre de menu
 	private JPanel container = new JPanel();
-	GridBagLayout gl = new GridBagLayout();
-	//L'objet servant à positionner les composants
-	GridBagConstraints gbc = new GridBagConstraints();
-	
-	//Un bouton par case de l'échiquier
-	JButton[][] cells = new JButton[8][8];
-	
 	private JMenuBar menuBar = new JMenuBar();
 	
+	//Item du menu
 	JMenu game = new JMenu("Game");
+	JMenuItem newGame = new JMenuItem("New Game");
+	JMenuItem leave = new JMenuItem("Leave");
+
+	// gestionnaire d'affichage
+	GridBagLayout gl = new GridBagLayout();
+	GridBagConstraints gbc = new GridBagConstraints();
 	
-	 JMenuItem   newGame = new JMenuItem("New Game"),
-	    leave = new JMenuItem("Leave");
+	// ecouteur d'evenement
+	Selection Listener = new Selection();
 
+	// plateau et boutton
+	private Piece[][] pieces;
+	public Plate Plateau = new Plate();
+	public JButton[][] cells = new JButton[8][8];
+	
+	// compteur et variable de position
+	private int compteurClics=0;
+	private int posX = 0;
+	private int posY = 0;
 
+/*--------------------------------------------------------------------------------------------------------------------------------------------
+# Constructeur de class
+--------------------------------------------------------------------------------------------------------------------------------------------*/
 	public Display(){
 
-		this.setSize(900, 900);
+		this.setSize(800, 800);
 		this.setTitle("Echiquier");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
+		
 		//On initialise le conteneur avec tous les composants
 		initDisplay();
 		initMenu();
 		
 		this.setJMenuBar(menuBar);
-		//On ajoute le conteneur
 		this.setContentPane(container);
 		this.setVisible(true);
 	}
-
+	
+/*--------------------------------------------------------------------------------------------------------------------------------------------
+# Initialisation de la barre de menu :
+# Affichage du menu et impementation des données 
+--------------------------------------------------------------------------------------------------------------------------------------------*/
 	private void initMenu() {
 		
 	    leave.addActionListener(new ActionListener(){
@@ -67,30 +91,38 @@ public class Display extends JFrame{
 	    
 		game.add(newGame);
 	    game.addSeparator();
-	    game.add(leave);	    
-	    
+	    game.add(leave);	      
 	    menuBar.add(game);
 	}
 	
+/*--------------------------------------------------------------------------------------------------------------------------------------------
+# Initialisation du contenu de l'ecran :
+# generation graphique du plateau de jeu
+--------------------------------------------------------------------------------------------------------------------------------------------*/
 	private void initDisplay() {
 		
 		// TODO Auto-generated method stub
 		GridBagLayout gl = new GridBagLayout();
-		//L'objet servant à positionner les composants
 		GridBagConstraints gbc = new GridBagConstraints();
+		
 		//On positionne la case de départ du composant
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		
 		//La taille en hauteur et en largeur
 		gbc.gridheight = 1;
 		gbc.gridwidth = 1;
 
 		container.setLayout(gl);
+		
+		// affichage du plateau de jeux
 		for (JButton[] cellLine : cells) {
 			for (JButton cell : cellLine) {
 				cell = new JButton();
+				cell.setActionCommand(String.valueOf(gbc.gridx)+String.valueOf(gbc.gridy));
 				cell.setName(String.valueOf(gbc.gridx)+String.valueOf(gbc.gridy));
 				cell.setPreferredSize(new Dimension(90,90));
+				cell.addActionListener(Listener);
 				if (gbc.gridx % 2 == 0){
 					if (gbc.gridy %2 == 0) {
 						cell.setBackground(Color.white);
@@ -106,7 +138,7 @@ public class Display extends JFrame{
 				}
 				container.add(cell, gbc);
 				cells[gbc.gridx][gbc.gridy] = cell;
-				System.out.println(gbc.gridx+"-"+gbc.gridy);
+				
 				gbc.gridy ++;
 			}
 			gbc.gridx ++;
@@ -114,75 +146,89 @@ public class Display extends JFrame{
 		}
 	}
 	
+/*--------------------------------------------------------------------------------------------------------------------------------------------
+# Rafraichissement de l'affichage : 
+# mise a jour de l'interface graphique à chaque changement deplacement de piece
+--------------------------------------------------------------------------------------------------------------------------------------------*/
 	public void refreshDisplay(Plate gamePlate) {
 		
-		Piece[][] pieces = gamePlate.getPlate();
+		pieces = gamePlate.getPlate();
+		Plateau = gamePlate;
 
 		for(int i =0; i < 8; i++)
 		{
 			for(int j = 0; j < 8; j++)
 			{
-				cells[j][i].setIcon(pieces[j][i].getIcon());
-				pieces[j][i].show();
+				cells[j][i].setIcon(pieces[j][i].getIcon());			
 		    }
-			
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-/*		
-		
-		for (JButton[] cellLine : cells) {
-			System.out.println(gbc.gridx);
-			for (JButton cell : cellLine) {
+	}
+	
+/*--------------------------------------------------------------------------------------------------------------------------------------------
+# Gestionnaire d'evenement : 
+# gère le clic sur l'echiquier.
+--------------------------------------------------------------------------------------------------------------------------------------------*/
 
-				cell.setPreferredSize(new Dimension(70, 70));
-				cell.setIcon();
-				cell.repaint();
+	class Selection implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e) {
+
+			compteurClics++;
+
+			if (compteurClics == 1)
+			{			
+
+			// position de la cellule
+			String positionDebut = e.getActionCommand();
+			int xd = Integer.parseInt(String.valueOf(positionDebut.charAt(0)));
+			int yd = Integer.parseInt(String.valueOf(positionDebut.charAt(1)));
+			
+			posX = xd;
+			posY = yd;
 				
-				if (gbc.gridx % 2 == 0){
-					if (gbc.gridy %2 == 0) {
-						cell.setBackground(Color.white);
-					}
-					else cell.setBackground(Color.black);
-				}
-				else {
-
-					if (gbc.gridy %2 == 0) {
-						cell.setBackground(Color.black);
-					}
-					else cell.setBackground(Color.white);				
-				}
-				container.add(cell, gbc);
-				
-				gbc.gridy ++;
-				//System.out.println("2. y : " + gbc.gridy +" -- x : " + gbc.gridx);				
-
 			}
-			gbc.gridx ++;
-			gbc.gridy = 0;
 
-			//System.out.println("3. y : " + gbc.gridy +" -- x : " + gbc.gridx);				
-		}*/
+			if (compteurClics == 2)
+			{			
+
+				compteurClics=0;
+		
+			// position de la cellule
+			String positionFin = e.getActionCommand();
+			int xf = Integer.parseInt(String.valueOf(positionFin.charAt(0)));
+			int yf = Integer.parseInt(String.valueOf(positionFin.charAt(1)));
+
+			ArrayList<Piece> possibleMove = new ArrayList<Piece>();
+			possibleMove = pieces[posX][posY].accessibleCells(Plateau);
+			
+			if (possibleMove.size() == 0)
+			{
+				System.out.print("Rien");
+			}
+			else{
+				
+				for (Piece pos : possibleMove)
+				{
+					
+					if (pos.getRow()==yf && pos.getColumn()==xf)
+					{												
+						// on crée 2 plateau en 1 ca double les case donc ca plante.
+						Plateau.setPiece(pieces[posX][posY], yf, xf);				
+						Piece empty = new Empty();			
+						Plateau.setPiece(empty, posY, posX);					
+				
+						refreshDisplay(Plateau);
+						
+						posX = 0;
+						posY = 0;
+						
+					}
+				}
+				
+			}
+			
+			}
+		}
 		
 	}
 }

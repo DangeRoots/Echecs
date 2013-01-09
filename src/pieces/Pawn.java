@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 public class Pawn extends Piece {
 
 	@Override
-	ArrayList<Piece> accessibleCells(Plate plate) {
+	public ArrayList<Piece> accessibleCells(Plate plate) {
 
 		ArrayList<Piece> accessibles = new ArrayList<Piece>();
 		// Cas d'une piece morte

@@ -158,6 +158,7 @@ public class Game {
 	 * 			Promotion
 	 * 			Pat
 	 * 			Gestion du compteur Blitz
+	 * 
 	 */
 	public static void endTurn()
 	{	

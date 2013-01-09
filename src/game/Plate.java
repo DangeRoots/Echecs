@@ -31,9 +31,14 @@ public class Plate {
 	}
 	
 	public void setPiece(Piece piece, int x, int y){
+<<<<<<< HEAD
+		piece.setRow(y);
+		piece.setColumn(x);
+=======
 		/*piece.setRow(y);
 		piece.setColumn(x);*/
 		piece.setPosition(y, x);
+>>>>>>> a7f5525bc0ecd7285abd8be21a7afb575816d567
 		plate[y][x]= piece;
 		
 	}

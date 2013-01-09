@@ -14,7 +14,7 @@ public abstract class Piece {
 	private int m_row;
 	private int m_column;
 	
-	abstract ArrayList<Piece> accessibleCells(Plate plate);
+	abstract public ArrayList<Piece> accessibleCells(Plate plate);
 	
 	abstract public void show();
 	

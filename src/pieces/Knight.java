@@ -10,14 +10,42 @@ import javax.swing.ImageIcon;
 public class Knight extends Piece {
 
 	@Override
-	ArrayList<Piece> accessibleCells(Plate plate) {
-
-		ArrayList<Piece> accessibles = new ArrayList();
+	
+	public ArrayList<Piece> accessibleCells(Plate plate) {
+		ArrayList<Piece> accessibles = new ArrayList<Piece>();
 		// Cas d'une piece morte
 		if(!this.isOnScreen()){
 			return null;
 		}
-		return null;
+		else{
+			int x = this.getRow();
+			int y = this.getColumn();
+			// 1 Nord 2 Est
+			if (x < 7 && y < 6 && plate.getPiece(x+1, y+2).getColor()!=this.getColor())
+				accessibles.add(plate.getPiece(x+1, y+2));
+			// 2 Nord 1 Est
+			if (x < 6 && y < 7 && plate.getPiece(x+2, y+1).getColor()!=this.getColor())
+				accessibles.add(plate.getPiece(x+2, y+1));
+			// 1 Nord 2 Ouest
+			if (x > 0 && y > 1 && plate.getPiece(x-1, y-2).getColor()!=this.getColor())
+				accessibles.add(plate.getPiece(x-1, y-2));
+			// 2 Nord 1 Ouest
+			if (x > 1 && y > 0 && plate.getPiece(x-2, y-1).getColor()!=this.getColor())
+				accessibles.add(plate.getPiece(x-2, y-1));
+			// 1 Sud 2 Est
+			if (x < 7 && y < 6 && plate.getPiece(x+1, y+2).getColor()!=this.getColor())
+				accessibles.add(plate.getPiece(x+1, y+2));
+			// 2 Sud 1 Est
+			if (x < 6 && y < 7 && plate.getPiece(x+2, y+1).getColor()!=this.getColor())
+				accessibles.add(plate.getPiece(x+2, y+1));
+			// 1 Sud 2 Ouest
+			if (x > 0 && y > 1 && plate.getPiece(x-1, y-2).getColor()!=this.getColor())
+				accessibles.add(plate.getPiece(x-1, y-2));
+			// 2 Sud 1 Ouest
+			if (x > 1 && y > 0 && plate.getPiece(x-2, y-1).getColor()!=this.getColor())
+				accessibles.add(plate.getPiece(x-2, y-1));	
+			return accessibles;
+		}
 	}
 
 	@Override

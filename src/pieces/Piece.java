@@ -14,7 +14,7 @@ public abstract class Piece {
 	private int m_row;
 	private int m_column;
 	
-	abstract ArrayList<Piece> accessibleCells(Plate plate);
+	abstract public ArrayList<Piece> accessibleCells(Plate plate);
 	
 	abstract public void show();
 	
@@ -78,7 +78,7 @@ public abstract class Piece {
 		return position;
 	}
 
-	public void setPosition(int row, int col) {
+	public void setPosition(int col, int row) {
 		m_row=row;
 		m_column=col;
 	}

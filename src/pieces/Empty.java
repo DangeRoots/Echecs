@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 public class Empty extends Piece {
 
 	@Override
-	ArrayList<Piece> accessibleCells(Plate plate) {
+	public ArrayList<Piece> accessibleCells(Plate plate) {
 		// TODO Auto-generated method stub
 		return null;
 	}

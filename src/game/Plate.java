@@ -31,9 +31,9 @@ public class Plate {
 	}
 	
 	public void setPiece(Piece piece, int x, int y){
-		piece.setRow(x);
-		piece.setColumn(y);
-		plate[x][y]= piece;
+		piece.setRow(y);
+		piece.setColumn(x);
+		plate[y][x]= piece;
 		
 	}
 }

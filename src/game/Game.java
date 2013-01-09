@@ -12,16 +12,7 @@ import pieces.Rook;
 import view.Display;
 
 public class Game {
-<<<<<<< HEAD
 
-	public Display my_window;
-	public Plate my_plate;
-	
-	public Game(Display window,Plate plate)
-	{
-		my_window = window;
-		my_plate = plate;	
-	}
 	
 	public static void main (String args[])
 	{
@@ -58,8 +49,7 @@ public class Game {
 		plateau.setPiece(p6,5,6);
 		plateau.setPiece(p7,6,6);
 		plateau.setPiece(p8,7,6);
-=======
->>>>>>> 5699eb58e40dc34337e26559fb9e8d0fbe48c44d
+
 	
 	// Méthode instanciant les 16 pièces du joueur et les plaçant sur le plateau de jeu
 	public static void givePiecesToPlayer(Player play, Plate plateau)
@@ -160,6 +150,7 @@ public class Game {
 		givePiecesToPlayer(p_white, plateau);
 		givePiecesToPlayer(p_black, plateau);
 	}
+	
 	public static void main (String args[])
 	{
 		Display window = new Display();

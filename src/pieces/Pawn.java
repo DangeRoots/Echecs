@@ -30,10 +30,10 @@ public class Pawn extends Piece {
 				if (x > 0 && plate.getPiece(x-1, y).getColor()=="e")
 					accessibles.add(plate.getPiece(x-1, y));
 				//diagonale gauche
-				if (y > 0 && plate.getPiece(x-1, y-1).getColor() == "b")
+				if (y > 0 && x>0 && plate.getPiece(x-1, y-1).getColor() == "b")
 					accessibles.add(plate.getPiece(x-1, y-1));					
 				//diagonale droite
-				if (y < 7 && plate.getPiece(x-1,y+1).getColor() == "b")
+				if (y < 7 && x>0 && plate.getPiece(x-1,y+1).getColor() == "b")
 					accessibles.add(plate.getPiece(x-1, y+1));
 			}
 
@@ -46,10 +46,10 @@ public class Pawn extends Piece {
 				if(x < 7 && plate.getPiece(x+1,y).getColor()=="e")
 					accessibles.add(plate.getPiece(x+1, y));
 				//diagonale gauche
-				if(x < 7 && plate.getPiece(x+1, y-1).getColor() == "w")
+				if(x < 7 && y>0 && plate.getPiece(x+1, y-1).getColor() == "w")
 					accessibles.add(plate.getPiece(x+1, y-1));
 				//diagonale droite
-				if (x < 7 && plate.getPiece(x+1, y+1).getColor() == "w")
+				if (x < 7 && y<7 && plate.getPiece(x+1, y+1).getColor() == "w")
 					accessibles.add(plate.getPiece(x+1, y+1));
 			}			
 			return accessibles;

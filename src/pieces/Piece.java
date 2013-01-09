@@ -22,7 +22,7 @@ public abstract class Piece {
 
 
 	public boolean isOnScreen() {
-		if(m_row > 0 && m_row <= 7 && m_column > 0 && m_column <= 7){
+		if(m_row >= 0 && m_row <= 7 && m_column >= 0 && m_column <= 7){
 			return true;
 		}
 		else {

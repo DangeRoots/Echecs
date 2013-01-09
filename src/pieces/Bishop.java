@@ -19,68 +19,62 @@ public class Bishop extends Piece {
 		else{
 			int x = this.getRow();
 			int y = this.getColumn();
-			//Nord Est
-			for (int i = x+1; i < 8;i++)
-				for (int j = y+1; j < 8; j++)
+			//Sud Est
+			// ex : pos 5,4 == posiible -> 6,6 7,6
+			if (y < 7 && x < 7)
+				for (int i = 1; i < 8-x; i++ )
 				{
-					if (plate.getPiece(i, j).getColor()==this.getColor())
-						i = j = 8;
+					if (plate.getPiece(x+i,y+i).getColor()==this.getColor())
+						i = 10;
 					else
 					{
-						accessibles.add(plate.getPiece(i, y));
-						if (plate.getPiece(i, j).getColor()!="e")
-							i = j = 8;
+						accessibles.add(plate.getPiece(x+i,y+i));
+						if (plate.getPiece(x+i,y+i).getColor()!="e")
+							i = 10;
+					}
+				}
+			//Nord Est
+			// ex : pos 5,4 == posiible -> 6,6 7,6
+			if ( x> 0 && y < 7)
+				for (int i = 1; i < 8-y; i++ )
+				{
+					if (plate.getPiece(x-i,y+i).getColor()==this.getColor())
+						i = 10;
+					else
+					{
+						accessibles.add(plate.getPiece(x-i,y+i));
+						if (plate.getPiece(x-i,y+i).getColor()!="e")
+							i = 10;
 					}
 				}
 			//Nord Ouest
-			for (int i = x+1; i < 8;i++)
-				for (int j = y-1; j > 0; j--)
+			if ( x > 0 && y > 0)
+				for (int i = 1; i <= x; i++ )
 				{
-					if (plate.getPiece(i, j).getColor()==this.getColor())
-					{
-						i = 8;
-						j = -1;
-					}
+					if (plate.getPiece(x-i,y-i).getColor()==this.getColor())
+						i = 10;
 					else
 					{
-						accessibles.add(plate.getPiece(i, y));
-						if (plate.getPiece(i, j).getColor()!="e")
-							i = 8;
-							j = -1;
+						accessibles.add(plate.getPiece(x-i,y-i));
+						if (plate.getPiece(x-i,y-i).getColor()!="e")
+							i = 10;
 					}
 				}
 			//Sud Ouest
-			for (int i = x-1; i > 0; i--)
-				for (int j = y-1 ;j > 0; j--)
+			/** @todo probleme d'indice ! */
+			if (x < 7 && y > 0)
+				for (int i = 1; i <= y; i++ )
 				{
-					if (plate.getPiece(i, j).getColor()==this.getColor())
-					{
-						i = j = -1;
-					}
+					if (plate.getPiece(x+i,y-i).getColor()==this.getColor())
+						i = 10;
 					else
 					{
-						accessibles.add(plate.getPiece(i, y));
-						if (plate.getPiece(i, j).getColor()!="e")
-							i = j = -1;
+						accessibles.add(plate.getPiece(x+i,y-i));
+						if (plate.getPiece(x+i,y-i).getColor()!="e")
+							i = 10;
 					}
 				}
-			//Sud Est
-			for (int i = x-1; i > 0;i--)
-				for (int j = y+1; j < 8; j++)
-				{
-					if (plate.getPiece(i, j).getColor()==this.getColor())
-					{
-						j = 8;
-						i = -1;
-					}
-					else
-					{
-						accessibles.add(plate.getPiece(i, y));
-						if (plate.getPiece(i, j).getColor()!="e")
-							j = 8;
-							i =-1;
-					}
-				}
+			
 			return accessibles;
 		}
 	}

@@ -23,6 +23,28 @@ public class Game {
 	static Player p_white;
 	static Player p_black;
 	static boolean g_ended;
+	static Display g_window;
+	static Plate g_plateau;
+	static boolean g_wcheck;
+	static boolean g_bcheck;
+	
+		
+	public static Player getP_white() {
+		return p_white;
+	}
+
+	public static Player getP_black() {
+		return p_black;
+	}
+
+	public static boolean isG_wcheck() {
+		return g_wcheck;
+	}
+
+	public static boolean isG_bcheck() {
+		return g_bcheck;
+	}
+
 	// Méthode instanciant les 16 pièces du joueur et les plaçant sur le plateau de jeu
 	public static void givePiecesToPlayer(Player play, Plate plateau)
 	{
@@ -116,11 +138,14 @@ public class Game {
 	// Méthode initialisant le jeu : joueurs + pièces, joueur actif
 	public static void initGame(Plate plateau)
 	{
+		g_plateau = new Plate();
+		g_bcheck = false;
+		g_wcheck = false;
 		p_white = new Player("White Player", "w");
 		p_black = new Player("Black Player", "b");
 		
-		givePiecesToPlayer(p_white, plateau);
-		givePiecesToPlayer(p_black, plateau);
+		givePiecesToPlayer(p_white, g_plateau);
+		givePiecesToPlayer(p_black, g_plateau);
 		
 		active_player = p_white;
 		g_ended = false;
@@ -188,13 +213,11 @@ public class Game {
 	
 	public static void main (String args[])
 	{
-		Display window = new Display();
-
-		Plate plateau = new Plate();
+		g_window = new Display();
 		
-		initGame(plateau);
+		initGame(g_plateau);
 		
-		window.refreshDisplay(plateau);
+		g_window.refreshDisplay(g_plateau);
 		
 		/*	Déroulement d'un tour de jeu
 		 * 	Initialisation du nouveau tour 			-> beginNewTurn()

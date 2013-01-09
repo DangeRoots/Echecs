@@ -27,12 +27,13 @@ public class Plate {
 	
 	public Piece getPiece(int x,int y)
 	{
-		return plate[x][y];
+		return plate[y][x];
 	}
 	
 	public void setPiece(Piece piece, int x, int y){
-		piece.setRow(y);
-		piece.setColumn(x);
+		/*piece.setRow(y);
+		piece.setColumn(x);*/
+		piece.setPosition(y, x);
 		plate[y][x]= piece;
 		
 	}

@@ -78,7 +78,7 @@ public abstract class Piece {
 		return position;
 	}
 
-	public void setPosition(int row, int col) {
+	public void setPosition(int col, int row) {
 		m_row=row;
 		m_column=col;
 	}

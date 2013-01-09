@@ -11,6 +11,15 @@ import view.Display;
 
 public class Game {
 
+	public Display my_window;
+	public Plate my_plate;
+	
+	public Game(Display window,Plate plate)
+	{
+		my_window = window;
+		my_plate = plate;	
+	}
+	
 	public static void main (String args[])
 	{
 		Display window = new Display();

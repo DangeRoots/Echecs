@@ -1,0 +1,14 @@
+#--------------------------------
+# On ignore
+# - le main compilé
+# - les fichiers temporaires
+# - les fichiers objets
+# - certains répertoires de tests
+#--------------------------------
+*.class
+*.*~
+
+bin/game/
+bin/pieces/
+bin/tests/
+bin/view/

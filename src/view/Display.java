@@ -24,35 +24,41 @@ import pieces.Empty;
 import pieces.Piece;
 public class Display extends JFrame{
 
+	// container de la fenetre
 	private JPanel container = new JPanel();
-	GridBagLayout gl = new GridBagLayout();
-	//L'objet servant à positionner les composants
-	GridBagConstraints gbc = new GridBagConstraints();
-	
-	//Un bouton par case de l'échiquier
-	JButton[][] cells = new JButton[8][8];
-	
+	//tableau de piece
+	private Piece[][] pieces;
+	//Menu
 	private JMenuBar menuBar = new JMenuBar();
 	
+	//Item du menu
 	JMenu game = new JMenu("Game");
+	JMenuItem   newGame = new JMenuItem("New Game"),leave = new JMenuItem("Leave");
 	
-	 JMenuItem   newGame = new JMenuItem("New Game"),
-	    leave = new JMenuItem("Leave");
+	// gestionnaire d'affichage
+	GridBagLayout gl = new GridBagLayout();
+	GridBagConstraints gbc = new GridBagConstraints();
+	
+	// ecouteur
+	Selection Listener = new Selection();
 
+	// plateau
+	JButton[][] cells = new JButton[8][8];
+	private int compteurClics=0;
 
 	public Display(){
 
-		this.setSize(900, 900);
+		this.setSize(800, 800);
 		this.setTitle("Echiquier");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
+		
 		//On initialise le conteneur avec tous les composants
 		initDisplay();
 		initMenu();
 		
 		this.setJMenuBar(menuBar);
-		//On ajoute le conteneur
 		this.setContentPane(container);
 		this.setVisible(true);
 	}
@@ -67,8 +73,7 @@ public class Display extends JFrame{
 	    
 		game.add(newGame);
 	    game.addSeparator();
-	    game.add(leave);	    
-	    
+	    game.add(leave);	      
 	    menuBar.add(game);
 	}
 	
@@ -89,8 +94,9 @@ public class Display extends JFrame{
 		for (JButton[] cellLine : cells) {
 			for (JButton cell : cellLine) {
 				cell = new JButton();
+				cell.setActionCommand(String.valueOf(gbc.gridx)+String.valueOf(gbc.gridy));
 				cell.setName(String.valueOf(gbc.gridx)+String.valueOf(gbc.gridy));
-				cell.setPreferredSize(new Dimension(90,90));
+				cell.setPreferredSize(new Dimension(90,90));				
 				if (gbc.gridx % 2 == 0){
 					if (gbc.gridy %2 == 0) {
 						cell.setBackground(Color.white);
@@ -106,7 +112,7 @@ public class Display extends JFrame{
 				}
 				container.add(cell, gbc);
 				cells[gbc.gridx][gbc.gridy] = cell;
-				System.out.println(gbc.gridx+"-"+gbc.gridy);
+				
 				gbc.gridy ++;
 			}
 			gbc.gridx ++;
@@ -116,73 +122,55 @@ public class Display extends JFrame{
 	
 	public void refreshDisplay(Plate gamePlate) {
 		
-		Piece[][] pieces = gamePlate.getPlate();
+		pieces = gamePlate.getPlate();
 
 		for(int i =0; i < 8; i++)
 		{
 			for(int j = 0; j < 8; j++)
 			{
 				cells[j][i].setIcon(pieces[j][i].getIcon());
+				cells[j][i].addActionListener(Listener);
 				pieces[j][i].show();
 		    }
-			
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-/*		
-		
-		for (JButton[] cellLine : cells) {
-			System.out.println(gbc.gridx);
-			for (JButton cell : cellLine) {
-
-				cell.setPreferredSize(new Dimension(70, 70));
-				cell.setIcon();
-				cell.repaint();
-				
-				if (gbc.gridx % 2 == 0){
-					if (gbc.gridy %2 == 0) {
-						cell.setBackground(Color.white);
-					}
-					else cell.setBackground(Color.black);
-				}
-				else {
-
-					if (gbc.gridy %2 == 0) {
-						cell.setBackground(Color.black);
-					}
-					else cell.setBackground(Color.white);				
-				}
-				container.add(cell, gbc);
-				
-				gbc.gridy ++;
-				//System.out.println("2. y : " + gbc.gridy +" -- x : " + gbc.gridx);				
-
+	}
+	
+	class Selection implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e) {
+			
+			int posX;
+			int posY;
+			
+			if (compteurClics == 0)
+			{			
+			// position de la cellule
+			String positionDebut = e.getActionCommand();
+			int xd = Integer.parseInt(String.valueOf(positionDebut.charAt(0)));
+			int yd = Integer.parseInt(String.valueOf(positionDebut.charAt(1)));
+			
+			posX = xd;
+			posY = yd;
+			
+			compteurClics++;
 			}
-			gbc.gridx ++;
-			gbc.gridy = 0;
 
-			//System.out.println("3. y : " + gbc.gridy +" -- x : " + gbc.gridx);				
-		}*/
+			if (compteurClics == 2)
+			{			
+			// position de la cellule
+			String positionFin = e.getActionCommand();
+			int xf = Integer.parseInt(String.valueOf(positionFin.charAt(0)));
+			int yf = Integer.parseInt(String.valueOf(positionFin.charAt(1)));
+
+			// pieces[posX][posY].accessibleCells;
+			
+			compteurClics=0;
+				
+			}
+			
+			
+
+		}
 		
 	}
 }

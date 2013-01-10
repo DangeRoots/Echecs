@@ -36,9 +36,8 @@ public class Bishop extends Piece {
 					}
 				}
 			//Nord Est
-			// ex : pos 5,4 == posiible -> 6,6 7,6
 			if ( x> 0 && y < plate.getBoardSize()-1)
-				for (int i = 1; i < 8-y; i++ )
+				for (int i = 1; i < plate.getBoardSize()-y; i++ )
 				{
 					if (x-i>=0 && y+i<plate.getBoardSize())
 					{

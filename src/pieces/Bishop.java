@@ -20,17 +20,19 @@ public class Bishop extends Piece {
 			int x = this.getRow();
 			int y = this.getColumn();
 			//Sud Est
-			// ex : pos 5,4 == posiible -> 6,6 7,6
 			if (y < 7 && x < 7)
 				for (int i = 1; i < 8-x; i++ )
 				{
-					if (plate.getPiece(x+i,y+i).getColor()==this.getColor())
-						i = 10;
-					else
+					if (x+i<8 && y+i<8)
 					{
-						accessibles.add(plate.getPiece(x+i,y+i));
-						if (plate.getPiece(x+i,y+i).getColor()!="e")
+						if (plate.getPiece(x+i,y+i).getColor()==this.getColor())
 							i = 10;
+						else
+						{
+							accessibles.add(plate.getPiece(x+i,y+i));
+							if (plate.getPiece(x+i,y+i).getColor()!="e")
+								i = 10;
+						}
 					}
 				}
 			//Nord Est
@@ -38,40 +40,48 @@ public class Bishop extends Piece {
 			if ( x> 0 && y < 7)
 				for (int i = 1; i < 8-y; i++ )
 				{
-					if (plate.getPiece(x-i,y+i).getColor()==this.getColor())
-						i = 10;
-					else
+					if (x-i>=0 && y+i<8)
 					{
-						accessibles.add(plate.getPiece(x-i,y+i));
-						if (plate.getPiece(x-i,y+i).getColor()!="e")
+						if (plate.getPiece(x-i,y+i).getColor()==this.getColor())
 							i = 10;
+						else
+						{
+							accessibles.add(plate.getPiece(x-i,y+i));
+							if (plate.getPiece(x-i,y+i).getColor()!="e")
+								i = 10;
+						}
 					}
 				}
 			//Nord Ouest
 			if ( x > 0 && y > 0)
 				for (int i = 1; i <= x; i++ )
 				{
-					if (plate.getPiece(x-i,y-i).getColor()==this.getColor())
-						i = 10;
-					else
+					if (x-i>=0 && y-i>=0)
 					{
-						accessibles.add(plate.getPiece(x-i,y-i));
-						if (plate.getPiece(x-i,y-i).getColor()!="e")
+						if (plate.getPiece(x-i,y-i).getColor()==this.getColor())
 							i = 10;
+						else
+						{
+							accessibles.add(plate.getPiece(x-i,y-i));
+							if (plate.getPiece(x-i,y-i).getColor()!="e")
+								i = 10;
+						}
 					}
 				}
 			//Sud Ouest
-			/** @todo probleme d'indice ! */
 			if (x < 7 && y > 0)
 				for (int i = 1; i <= y; i++ )
 				{
-					if (plate.getPiece(x+i,y-i).getColor()==this.getColor())
-						i = 10;
-					else
+					if (x+i<8 && y-i>=0)
 					{
-						accessibles.add(plate.getPiece(x+i,y-i));
-						if (plate.getPiece(x+i,y-i).getColor()!="e")
+						if (plate.getPiece(x+i,y-i).getColor()==this.getColor())
 							i = 10;
+						else
+						{
+							accessibles.add(plate.getPiece(x+i,y-i));
+							if (plate.getPiece(x+i,y-i).getColor()!="e")
+								i = 10;
+						}
 					}
 				}
 			

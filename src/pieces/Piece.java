@@ -22,12 +22,7 @@ public abstract class Piece {
 
 
 	public boolean isOnScreen(Plate plate) {
-		if(m_row >= 0 && m_row <= plate.getBoardSize()-1 && m_column >= 0 && m_column <= plate.getBoardSize()-1){
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (m_row >= 0 && m_row <= plate.getBoardSize()-1 && m_column >= 0 && m_column <= plate.getBoardSize()-1);
 	}
 	
 	abstract boolean move(Piece piece);

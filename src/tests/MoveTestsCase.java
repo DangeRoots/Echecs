@@ -14,54 +14,93 @@ import pieces.*;
 public class MoveTestsCase extends TestCase {
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
+//	public void test() {
+//		fail("Not yet implemented");
+//	}
 
 	public void testMoveKings() {
 		
 		Plate plateau = new Plate();
-		King king = new King();
-		king.setColor("w");
-		plateau.setPiece(king, 0, 7);
-		
+		King testedPiece = new King();
+		testedPiece.setColor("b");
+		plateau.setPiece(testedPiece, 0, 7);
+
 		ArrayList<Piece> dispo = new ArrayList<Piece>();
-		dispo = king.accessibleCells(plateau);
+		dispo = testedPiece.accessibleCells(plateau);
 		for (int i=0;i<dispo.size();i++)
 		{
-			System.out.println("Row : " + dispo.get(i).getRow() +" Col : " + dispo.get(i).getColumn());
+			System.out.println("Row : " + dispo.get(i).getRow() +" Column : " + dispo.get(i).getColumn());
 		}	
 	}
 
 	public void testMoveBishops() {
 	
-		/** Problemes d'indices */
 		Plate plateau = new Plate();
-		Bishop bishop = new Bishop();
-		bishop.setColor("w");
-		plateau.setPiece(bishop, 0, 7);
+		Bishop testedPiece = new Bishop();
+		testedPiece.setColor("w");
+		plateau.setPiece(testedPiece, 4, 4);
 	
 		ArrayList<Piece> dispo = new ArrayList<Piece>();
-		dispo = bishop.accessibleCells(plateau);
+		dispo = testedPiece.accessibleCells(plateau);
 		for (int i=0;i<dispo.size();i++)
 		{
-			System.out.println("Row : " + dispo.get(i).getRow() +" Col : " + dispo.get(i).getColumn());
+			System.out.println("Row : " + dispo.get(i).getRow() +" Column : " + dispo.get(i).getColumn());
 		}
 	}
 	
-//	public void testMoveKnights() {
-//		
-//	} 
-//
-//	public void testMovePawns() {
-//		
-//	}
-//	
-//	public void testMoveQueens() {
-//		
-//	}
-//	
-//	public void testMoveRooks() {
-//		
-//	}
+	public void testMoveKnights() {
+		Plate plateau = new Plate();
+		Knight testedPiece = new Knight();
+		testedPiece.setColor("b");
+		plateau.setPiece(testedPiece, 3, 5);
+	
+		ArrayList<Piece> dispo = new ArrayList<Piece>();
+		dispo = testedPiece.accessibleCells(plateau);
+		for (int i=0;i<dispo.size();i++)
+		{
+			System.out.println("Row : " + dispo.get(i).getRow() +" Column : " + dispo.get(i).getColumn());
+		}	
+	} 
+
+	public void testMovePawns() {
+		Plate plateau = new Plate();
+		Pawn testedPiece = new Pawn();
+		testedPiece.setColor("w");
+		plateau.setPiece(testedPiece, 5, 6);
+	
+		ArrayList<Piece> dispo = new ArrayList<Piece>();
+		dispo = testedPiece.accessibleCells(plateau);
+		for (int i=0;i<dispo.size();i++)
+		{
+			System.out.println("Row : " + dispo.get(i).getRow() +" Column : " + dispo.get(i).getColumn());
+		}
+	}
+	
+	public void testMoveQueens() {
+		Plate plateau = new Plate();
+		Queen testedPiece = new Queen();
+		testedPiece.setColor("w");
+		plateau.setPiece(testedPiece, 1, 6);
+	
+		ArrayList<Piece> dispo = new ArrayList<Piece>();
+		dispo = testedPiece.accessibleCells(plateau);
+		for (int i=0;i<dispo.size();i++)
+		{
+			System.out.println("Row : " + dispo.get(i).getRow() +" Column : " + dispo.get(i).getColumn());
+		}
+	}
+	
+	public void testMoveRooks() {
+		Plate plateau = new Plate();
+		Rook testedPiece = new Rook();
+		testedPiece.setColor("w");
+		plateau.setPiece(testedPiece, 5, 6);
+	
+		ArrayList<Piece> dispo = new ArrayList<Piece>();
+		dispo = testedPiece.accessibleCells(plateau);
+		for (int i=0;i<dispo.size();i++)
+		{
+			System.out.println("Row : " + dispo.get(i).getRow() +" Column : " + dispo.get(i).getColumn());
+		}
+	}
 }

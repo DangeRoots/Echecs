@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 
 
 import pieces.Empty;
+import pieces.King;
 import pieces.Piece;
 
 /*--------------------------------------------------------------------------------------------------------------------------------------------
@@ -159,7 +160,7 @@ public class Display extends JFrame{
 				AdvanceInterface.add(container, BorderLayout.CENTER);	
 				initDisplay(true);
 
-				Plateau = Game.initGame(); 
+				Plateau = Game.initGame("capablanca"); 
 				refreshDisplay(Plateau);
 			}      
 		});
@@ -245,11 +246,11 @@ public class Display extends JFrame{
 		pieces = gamePlate.getPlate();
 		Plateau = gamePlate;
 
-		for(int i =0; i < 8; i++)
+		for(int i =0; i < Nbx; i++)
 		{
-			for(int j = 0; j < 8; j++)
+			for(int j = 0; j < Nby; j++)
 			{
-				cells[j][i].setIcon(pieces[j][i].getIcon());			
+				cells[i][j].setIcon(pieces[i][j].getIcon());			
 			}
 		}
 	}
@@ -345,25 +346,64 @@ public class Display extends JFrame{
 					DisplayPlateColor(Nbx, Nby);
 				}
 				else{
+					
 					cells[posX][posY].setBackground(color);
+					
 					for (Piece pos : possibleMove)
 					{
-
+						
+						/**
+																
+						kingTarget = Game.isG_Kcheck(Plateau, Game.getActive_player());
+						
+						if (kingTarget.getColor() == Game.getActive_player().getM_color())
+						{
+							Plateau.setPiece(pieces[xf][yf],posY ,posX );
+							Plateau.setPiece(empty, yf, xf);
+						}
+						else
+						{					
+						cells[posX][posY].setBackground(color);
+						Game.endTurn();
+						player.setText(Game.getActive_player().getM_name());
+						}
+						
+						refreshDisplay(Plateau);
+						
+						posX = 0;
+						posY = 0;
+					}
+					 */
 						if (pos.getRow()==yf && pos.getColumn()==xf)
-						{												
+						{	Piece empty = new Empty();
+							Piece kingTarget = new King();			
 							// on crée 2 plateau en 1 ca double les case donc ca plante.
-							Plateau.setPiece(pieces[posX][posY], yf, xf);				
-							Piece empty = new Empty();			
-							Plateau.setPiece(empty, posY, posX);					
-
+							Plateau.setPiece(pieces[posX][posY], yf, xf);		
+							Plateau.setPiece(empty, posY, posX);
+							System.out.println(Plateau.getBoardSize());
+							kingTarget = Game.isG_Kcheck(Plateau, Game.getActive_player());
+							
+							if (kingTarget.getColor() == Game.getActive_player().getM_color())
+							{
+								Plateau.setPiece(pieces[xf][yf],posY ,posX );
+								Plateau.setPiece(empty, yf, xf);
+							}
+							else
+							{				
+							cells[posX][posY].setBackground(color);
+							Game.endTurn();
+							player.setText(Game.getActive_player().getM_name());
+							}
 							//cells[posX][posY].setBackground(color);
 
 							refreshDisplay(Plateau);
 
 							posX = 0;
 							posY = 0;
-							Game.endTurn();
-							player.setText(Game.getActive_player().getM_name());
+							DisplayPlateColor(Nbx, Nby);
+						}
+						else 
+						{
 							DisplayPlateColor(Nbx, Nby);
 						}
 					}	
@@ -377,24 +417,24 @@ public class Display extends JFrame{
 
 		{
 			// on reaffiche les couleur du plateau
-			for(int i =0; i < NbX; i++)
+			for(int i =0; i < NbY; i++)
 			{
-				for(int j = 0; j < NbY; j++)
+				for(int j = 0; j < NbX; j++)
 				{
 					cells[j][i].setIcon(pieces[j][i].getIcon());
 
 					if (i % 2 == 0){
 						if (j %2 == 0) {
-							cells[i][j].setBackground(Color.white);
+							cells[j][i].setBackground(Color.white);
 						}
-						else cells[i][j].setBackground(Color.gray);
+						else cells[j][i].setBackground(Color.gray);
 					}
 					else {
 
 						if (j %2 == 0) {
-							cells[i][j].setBackground(Color.gray);
+							cells[j][i].setBackground(Color.gray);
 						}
-						else cells[i][j].setBackground(Color.white);				
+						else cells[j][i].setBackground(Color.white);				
 					}
 				}
 			}

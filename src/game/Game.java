@@ -2,7 +2,9 @@ package game;
 
 import java.util.ArrayList;
 
+import pieces.Archbishop;
 import pieces.Bishop;
+import pieces.Chancellor;
 import pieces.King;
 import pieces.Knight;
 import pieces.Pawn;
@@ -28,6 +30,10 @@ public class Game {
 	static Display g_window;
 	static Plate g_plateau;
 	static boolean g_Kcheck;
+	public static Piece[][] pieces;
+	
+	static int width;
+	static int heigth;
 	
 	
 	public static Player getActive_player() {
@@ -57,7 +63,7 @@ public class Game {
 		listeToutAccessibles = ArrayAllPieceAccessible(plate,player);
 		listeToutAccessiblesParAdverdaire = ArrayAllPieceAccessibleByAdverse(plate, player);
 		
-	
+		//System.out.println("3");
 			if (listeToutAccessiblesParAdverdaire != null)
 			{
 				for (int i = 0;i < listeToutAccessiblesParAdverdaire.size();i++)
@@ -102,20 +108,25 @@ public class Game {
 	//Methode 
 	public static ArrayList<Piece> ArrayAllPieceAccessible(Plate plate,Player player)
 	{
-		Piece[][] Tableau = new Piece[8][8];
-		Tableau = plate.getPlate();
+		//Piece[][] Tableau = new Piece[heigth][width];
+		
+		System.out.println("a");
+		pieces = plate.getPlate();
 		
 		ArrayList<Piece> listeToutAccessibles = new ArrayList<Piece>();
 		ArrayList<Piece> listeAccessibles = new ArrayList<Piece>();
-		
-		for(int i =0; i < 8; i++)
+		System.out.println("b");
+		for(int i =0; i < width; i++)
 		{
-			for(int j = 0; j < 8; j++)
+			for(int j = 0; j < heigth; j++)
 			{
-				listeAccessibles = Tableau[j][i].accessibleCells(plate);
+				System.out.println(pieces[i][j]);
+				listeAccessibles = pieces[i][j].accessibleCells(plate);
+				System.out.println("c");
+
 				if (listeAccessibles != null)
 				{	
-					for (int y=0; y < Tableau[j][i].accessibleCells(plate).size();y++)
+					for (int y=0; y < pieces[i][j].accessibleCells(plate).size();y++)
 					{	
 						if ((listeAccessibles.get(y).getColor() != player.getM_color()))
 						{
@@ -132,20 +143,19 @@ public class Game {
 	//Methode
 	public static ArrayList<Piece> ArrayAllPieceAccessibleByAdverse(Plate plate,Player player)
 	{
-		Piece[][] Tableau = new Piece[8][8];
-		Tableau = plate.getPlate();
+pieces = plate.getPlate();
 		
 		ArrayList<Piece> listeToutAccessibles = new ArrayList<Piece>();
 		ArrayList<Piece> listeAccessibles = new ArrayList<Piece>();
 		
-		for(int i =0; i < 8; i++)
+		for(int i =0; i < width; i++)
 		{
-			for(int j = 0; j < 8; j++)
+			for(int j = 0; j < heigth; j++)
 			{
-				listeAccessibles = Tableau[j][i].accessibleCells(plate);
+				listeAccessibles = pieces[i][j].accessibleCells(plate);
 				if (listeAccessibles != null)
 				{	
-					for (int y=0; y < Tableau[j][i].accessibleCells(plate).size();y++)
+					for (int y=0; y < pieces[i][j].accessibleCells(plate).size();y++)
 					{	
 						if ((listeAccessibles.get(y).getColor() == player.getM_color()))
 						{
@@ -161,16 +171,29 @@ public class Game {
 
 
 	// Méthode instanciant les 16 pièces du joueur et les plaçant sur le plateau de jeu
-	public static void givePiecesToPlayer(Player play, Plate plateau)
+	public static void givePiecesToPlayer(Player play, Plate plateau, String variante)
 	{
 		String t_color = play.getM_color();
 		// Create Pieces
 		// pions
-		Pawn[] m_pawn = new Pawn[8];
-		for (int i = 0; i < 8; i ++)
+		Pawn[] m_pawn;
+		if (variante == "capablanca")
 		{
-			m_pawn[i] = new Pawn();
-			m_pawn[i].setColor(t_color);
+			m_pawn = new Pawn[10];
+			for (int i = 0; i < 10; i ++)
+			{
+				m_pawn[i] = new Pawn();
+				m_pawn[i].setColor(t_color);
+			}
+		}
+		else 
+		{
+			m_pawn = new Pawn[8];
+			for (int i = 0; i < 8; i ++)
+			{
+				m_pawn[i] = new Pawn();
+				m_pawn[i].setColor(t_color);
+			}
 		}
 		// tour
 		Rook m_rook;
@@ -206,47 +229,107 @@ public class Game {
 		m_king = new King();
 		m_king.setColor(t_color);
 
+		Archbishop m_arch = new Archbishop();
+		m_arch.setColor(t_color);
 
-		// Place the pieces on the plate
-		if (t_color == "w")
+		Chancellor m_chan = new Chancellor();
+		m_chan.setColor(t_color);
+
+
+		if (variante == "capablanca")
 		{
-			for (int i=0; i < 8; i ++)
+			// Place the pieces on the plate
+			if (t_color == "w")
 			{
-				plateau.setPiece(m_pawn[i], 6, i);
+				for (int i=0; i < 10; i ++)
+				{
+					plateau.setPiece(m_pawn[i], 6, i);
+				}
+
+				plateau.setPiece(m_rook, 7, 0);
+				plateau.setPiece(m_rook2, 7, 9);
+
+				plateau.setPiece(m_knight, 7, 1);
+				plateau.setPiece(m_knight2, 7, 8);
+				
+				plateau.setPiece(m_arch, 7, 2);
+				plateau.setPiece(m_chan, 7, 7);
+
+				plateau.setPiece(m_bish, 7, 3);
+				plateau.setPiece(m_bish2, 7, 6);
+
+				plateau.setPiece(m_queen, 7, 4);
+				plateau.setPiece(m_king, 7, 5);
+
 			}
+			else
+			{
+				for (int i=0; i < 10; i ++)
+				{
+					plateau.setPiece(m_pawn[i], 1, i);
+				}
 
-			plateau.setPiece(m_rook, 7, 0);
-			plateau.setPiece(m_rook2, 7, 7);
+				plateau.setPiece(m_rook, 0, 0);
+				plateau.setPiece(m_rook2, 0, 9);
 
-			plateau.setPiece(m_knight, 7, 1);
-			plateau.setPiece(m_knight2, 7, 6);
+				plateau.setPiece(m_knight, 0, 1);
+				plateau.setPiece(m_knight2, 0, 8);
+				
+				plateau.setPiece(m_arch, 0, 2);
+				plateau.setPiece(m_chan, 0, 7);
 
-			plateau.setPiece(m_bish, 7, 2);
-			plateau.setPiece(m_bish2, 7, 5);
+				plateau.setPiece(m_bish, 0, 3);
+				plateau.setPiece(m_bish2, 0, 6);
 
-			plateau.setPiece(m_queen, 7, 3);
-			plateau.setPiece(m_king, 7, 4);
-
+				plateau.setPiece(m_queen, 0, 4);
+				plateau.setPiece(m_king, 0, 5);
+			}
+			
 		}
-		else
+		else 
 		{
-			for (int i=0; i < 8; i ++)
+			// Place the pieces on the plate
+			if (t_color == "w")
 			{
-				plateau.setPiece(m_pawn[i], 1, i);
+				for (int i=0; i < 8; i ++)
+				{
+					plateau.setPiece(m_pawn[i], 6, i);
+				}
+
+				plateau.setPiece(m_rook, 7, 0);
+				plateau.setPiece(m_rook2, 7, 7);
+
+				plateau.setPiece(m_knight, 7, 1);
+				plateau.setPiece(m_knight2, 7, 6);
+
+				plateau.setPiece(m_bish, 7, 2);
+				plateau.setPiece(m_bish2, 7, 5);
+
+				plateau.setPiece(m_queen, 7, 3);
+				plateau.setPiece(m_king, 7, 4);
+
 			}
+			else
+			{
+				for (int i=0; i < 8; i ++)
+				{
+					plateau.setPiece(m_pawn[i], 1, i);
+				}
 
-			plateau.setPiece(m_rook, 0, 0);
-			plateau.setPiece(m_rook2, 0, 7);
+				plateau.setPiece(m_rook, 0, 0);
+				plateau.setPiece(m_rook2, 0, 7);
 
-			plateau.setPiece(m_knight, 0, 1);
-			plateau.setPiece(m_knight2, 0, 6);
+				plateau.setPiece(m_knight, 0, 1);
+				plateau.setPiece(m_knight2, 0, 6);
 
-			plateau.setPiece(m_bish, 0, 2);
-			plateau.setPiece(m_bish2, 0, 5);
+				plateau.setPiece(m_bish, 0, 2);
+				plateau.setPiece(m_bish2, 0, 5);
 
-			plateau.setPiece(m_queen, 0, 3);
-			plateau.setPiece(m_king, 0, 4);
+				plateau.setPiece(m_queen, 0, 3);
+				plateau.setPiece(m_king, 0, 4);
+			}
 		}
+		
 
 	}
 
@@ -257,17 +340,47 @@ public class Game {
 		/** @TODO
 		 * Remettre les cases à leur couleur de base
 		 */
+		width = 8;
+		heigth = 8;
 		g_plateau = new Plate();
 		g_Kcheck = false;
 		p_white = new Player("White Player", "w");
 		p_black = new Player("Black Player", "b");
 		
-		givePiecesToPlayer(p_white, g_plateau);
-		givePiecesToPlayer(p_black, g_plateau);
+		givePiecesToPlayer(p_white, g_plateau, "");
+		givePiecesToPlayer(p_black, g_plateau, "");
 		
 		active_player = p_white;
 		g_ended = false;
 		return g_plateau;
+	}
+	
+	// Méthode initialisant le jeu : joueurs + pièces, joueur actif variante capablanca
+	public static Plate initGame(String variante)
+	{
+		
+		/** @TODO
+		 * Remettre les cases à leur couleur de base
+		 */
+		if (variante == "capablanca")
+		{
+
+			width = 10;
+			heigth = 8;
+			g_plateau = new Plate("capablanca");
+			g_Kcheck = false;
+			p_white = new Player("White Player", "w");
+			p_black = new Player("Black Player", "b");
+			
+			givePiecesToPlayer(p_white, g_plateau, "capablanca");
+			givePiecesToPlayer(p_black, g_plateau, "capablanca");
+			
+			active_player = p_white;
+			g_ended = false;
+			return g_plateau;	
+		}
+		else { return null; }
+		
 	}
 	
 	/* Méthode appelée à la fin d'un tour de jeu :

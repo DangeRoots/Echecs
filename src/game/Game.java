@@ -44,53 +44,60 @@ public class Game {
 
 	
 	//Methode qui retourne si le roi est en echec = true
-	public static boolean isG_Kcheck(Plate plate,Player player) {
+	public static King isG_Kcheck(Plate plate,Player player) {
 		
+		//liste des mouvement disponible pour le joueur
 		ArrayList<Piece> listeToutAccessibles = new ArrayList<Piece>();
+		//liste des mouvement disponible pour le joueur adverse
+		ArrayList<Piece> listeToutAccessiblesParAdverdaire = new ArrayList<Piece>();
+		
 		King target = new King();
 		boolean check = false;
 		
 		listeToutAccessibles = ArrayAllPieceAccessible(plate,player);
+		listeToutAccessiblesParAdverdaire = ArrayAllPieceAccessibleByAdverse(plate, player);
 		
-		
-		if (player.getM_color() == "w")
-		{
-			if (listeToutAccessibles!= null)
+	
+			if (listeToutAccessiblesParAdverdaire != null)
 			{
-				for (int i = 0;i < listeToutAccessibles.size();i++)
+				for (int i = 0;i < listeToutAccessiblesParAdverdaire.size();i++)
 				{	
-					if (listeToutAccessibles.get(i).getColor() == "b" && listeToutAccessibles.get(i).getClass() == target.getClass() )
+					//Si le roi du joueur apparait dans la liste des mouvements de l'adversaire on interdit le mouvement
+					if (listeToutAccessiblesParAdverdaire.get(i).getClass() == target.getClass() )
 					{
 						check = true;
+						target = (King)listeToutAccessiblesParAdverdaire.get(i);
+						System.out.println("Déplacement interdit");
 					}
 				}	
-				if (check)
-				{
-				System.out.print("Le joueur noir est en échec");
-				}
 			}
-		}
-		else
-		{
 			if (listeToutAccessibles!= null)
 			{
-				for (int i = 0;i < listeToutAccessibles.size();i++)
+				for (int j = 0;j < listeToutAccessibles.size();j++)
 				{	
-					if (listeToutAccessibles.get(i).getColor() == "w" && listeToutAccessibles.get(i).getClass() == target.getClass() )
+					//Si le roi du joueur adverse apparait dans la liste de nos mouvements on le met en échec
+					if (listeToutAccessibles.get(j).getClass() == target.getClass() )
 					{
 						check = true;
+						target = (King)listeToutAccessibles.get(j);
 					}
-				}
-				if (check)
-				{
-				System.out.print("Le joueur blanc est en échec");
-				}
+				}	
 			}
-		}
+				
+			if (check)
+			{
+				if (target.getColor() == "b")
+				{
+					System.out.println("Le joueur noir est en échec");
+				}
+				else 
+				{
+					System.out.println("Le joueur blanc est en échec");
+				}			
+			}
 		
-		return check;
+		return target;
 	}
-	
 	
 	//Methode 
 	public static ArrayList<Piece> ArrayAllPieceAccessible(Plate plate,Player player)
@@ -111,6 +118,36 @@ public class Game {
 					for (int y=0; y < Tableau[j][i].accessibleCells(plate).size();y++)
 					{	
 						if ((listeAccessibles.get(y).getColor() != player.getM_color()))
+						{
+							listeToutAccessibles.add(listeAccessibles.get(y));		
+						}	
+					}
+				}
+			}
+		}
+		
+		return listeToutAccessibles;
+	}
+	
+	//Methode
+	public static ArrayList<Piece> ArrayAllPieceAccessibleByAdverse(Plate plate,Player player)
+	{
+		Piece[][] Tableau = new Piece[8][8];
+		Tableau = plate.getPlate();
+		
+		ArrayList<Piece> listeToutAccessibles = new ArrayList<Piece>();
+		ArrayList<Piece> listeAccessibles = new ArrayList<Piece>();
+		
+		for(int i =0; i < 8; i++)
+		{
+			for(int j = 0; j < 8; j++)
+			{
+				listeAccessibles = Tableau[j][i].accessibleCells(plate);
+				if (listeAccessibles != null)
+				{	
+					for (int y=0; y < Tableau[j][i].accessibleCells(plate).size();y++)
+					{	
+						if ((listeAccessibles.get(y).getColor() == player.getM_color()))
 						{
 							listeToutAccessibles.add(listeAccessibles.get(y));		
 						}	

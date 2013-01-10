@@ -13,7 +13,7 @@ public class Queen extends Piece {
 	public ArrayList<Piece> accessibleCells(Plate plate) {
 		ArrayList<Piece> accessibles = new ArrayList<Piece>();
 		// Cas d'une piece morte
-		if(!this.isOnScreen()){
+		if(!this.isOnScreen(plate)){
 			return null;
 		}
 		else{

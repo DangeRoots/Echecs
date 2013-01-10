@@ -14,7 +14,7 @@ public class Pawn extends Piece {
 
 		ArrayList<Piece> accessibles = new ArrayList<Piece>();
 		// Cas d'une piece morte
-		if(!this.isOnScreen()){
+		if(!this.isOnScreen(plate)){
 			return null;
 		}
 		else{
@@ -33,7 +33,7 @@ public class Pawn extends Piece {
 				if (y > 0 && x>0 && plate.getPiece(x-1, y-1).getColor() == "b")
 					accessibles.add(plate.getPiece(x-1, y-1));					
 				//diagonale droite
-				if (y < 7 && x>0 && plate.getPiece(x-1,y+1).getColor() == "b")
+				if (y < plate.getBoardSize()-1 && x>0 && plate.getPiece(x-1,y+1).getColor() == "b")
 					accessibles.add(plate.getPiece(x-1, y+1));
 			}
 
@@ -49,7 +49,7 @@ public class Pawn extends Piece {
 				if(x < 7 && y>0 && plate.getPiece(x+1, y-1).getColor() == "w")
 					accessibles.add(plate.getPiece(x+1, y-1));
 				//diagonale droite
-				if (x < 7 && y<7 && plate.getPiece(x+1, y+1).getColor() == "w")
+				if (x < 7 && y<plate.getBoardSize()-1 && plate.getPiece(x+1, y+1).getColor() == "w")
 					accessibles.add(plate.getPiece(x+1, y+1));
 			}			
 			return accessibles;

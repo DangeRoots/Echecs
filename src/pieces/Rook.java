@@ -13,7 +13,7 @@ public class Rook extends Piece {
 	public ArrayList<Piece> accessibleCells(Plate plate) {
 		ArrayList<Piece> accessibles = new ArrayList<Piece>();
 		// Cas d'une piece morte
-		if(!this.isOnScreen()){
+		if(!this.isOnScreen(plate)){
 			return null;
 		}
 		else{
@@ -45,7 +45,7 @@ public class Rook extends Piece {
 				}
 			}
 			//Droite
-			for (int i = y+1; i < 8;i++)
+			for (int i = y+1; i < plate.getBoardSize();i++)
 			{
 				if (plate.getPiece(x, i).getColor()==this.getColor())
 					i = 8;

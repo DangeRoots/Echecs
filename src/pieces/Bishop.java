@@ -13,17 +13,17 @@ public class Bishop extends Piece {
 	public ArrayList<Piece> accessibleCells(Plate plate) {
 		ArrayList<Piece> accessibles = new ArrayList<Piece>();
 		// Cas d'une piece morte
-		if(!this.isOnScreen()){
+		if(!this.isOnScreen(plate)){
 			return null;
 		}
 		else{
 			int x = this.getRow();
 			int y = this.getColumn();
 			//Sud Est
-			if (y < 7 && x < 7)
+			if (y < plate.getBoardSize()-1 && x < 7)
 				for (int i = 1; i < 8-x; i++ )
 				{
-					if (x+i<8 && y+i<8)
+					if (x+i<8 && y+i<plate.getBoardSize())
 					{
 						if (plate.getPiece(x+i,y+i).getColor()==this.getColor())
 							i = 10;
@@ -37,10 +37,10 @@ public class Bishop extends Piece {
 				}
 			//Nord Est
 			// ex : pos 5,4 == posiible -> 6,6 7,6
-			if ( x> 0 && y < 7)
+			if ( x> 0 && y < plate.getBoardSize()-1)
 				for (int i = 1; i < 8-y; i++ )
 				{
-					if (x-i>=0 && y+i<8)
+					if (x-i>=0 && y+i<plate.getBoardSize())
 					{
 						if (plate.getPiece(x-i,y+i).getColor()==this.getColor())
 							i = 10;

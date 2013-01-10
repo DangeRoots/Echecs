@@ -21,8 +21,8 @@ public abstract class Piece {
 	abstract public Icon getIcon();
 
 
-	public boolean isOnScreen() {
-		if(m_row >= 0 && m_row <= 7 && m_column >= 0 && m_column <= 7){
+	public boolean isOnScreen(Plate plate) {
+		if(m_row >= 0 && m_row <= plate.getBoardSize()-1 && m_column >= 0 && m_column <= plate.getBoardSize()-1){
 			return true;
 		}
 		else {

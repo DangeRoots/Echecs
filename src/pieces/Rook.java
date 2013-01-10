@@ -12,6 +12,7 @@ public class Rook extends Piece {
 	@Override
 	public ArrayList<Piece> accessibleCells(Plate plate) {
 		ArrayList<Piece> accessibles = new ArrayList<Piece>();
+		System.out.println("entree fonction");
 		// Cas d'une piece morte
 		if(!this.isOnScreen(plate)){
 			return null;
@@ -23,6 +24,7 @@ public class Rook extends Piece {
 			//Haut
 			for (int i = x+1; i < 8;i++)
 			{
+				//System.out.println("haut");
 				if (plate.getPiece(i, y).getColor()==this.getColor())
 					i = 8;
 				else
@@ -35,6 +37,7 @@ public class Rook extends Piece {
 			//Bas
 			for (int i = x-1; i > -1;i--)
 			{
+				//System.out.println("bas");
 				if (plate.getPiece(i, y).getColor()==this.getColor())
 					i = -1;
 				else
@@ -45,20 +48,23 @@ public class Rook extends Piece {
 				}
 			}
 			//Droite
+			System.out.println("boardSize : " + plate.getBoardSize());
 			for (int i = y+1; i < plate.getBoardSize();i++)
 			{
+				System.out.println(i);
 				if (plate.getPiece(x, i).getColor()==this.getColor())
-					i = 8;
+					i = plate.getBoardSize()+1;
 				else
 				{
 					accessibles.add(plate.getPiece(x, i));
 					if (plate.getPiece(x, i).getColor()!="e")
-						i = 8;
+						i = plate.getBoardSize() + 1;
 				}
 			}
 			//Gauche
 			for (int i = y-1; i > -1;i--)
 			{
+				//System.out.println("g");
 				if (plate.getPiece(x, i).getColor()==this.getColor())
 					i = -1;
 				else
@@ -67,7 +73,8 @@ public class Rook extends Piece {
 					if (plate.getPiece(x, i).getColor()!="e")
 						i = -1;
 				}
-			}	
+			}
+			System.out.println(accessibles.size());
 			return accessibles;
 		}
 	}

@@ -27,10 +27,13 @@ public class Game {
 	static boolean g_ended;
 	static Display g_window;
 	static Plate g_plateau;
-	static boolean g_wcheck;
-	static boolean g_bcheck;
+	static boolean g_Kcheck;
 	
-		
+	
+	public static Player getActive_player() {
+		return active_player;
+	}
+
 	public static Player getP_white() {
 		return p_white;
 	}
@@ -39,13 +42,86 @@ public class Game {
 		return p_black;
 	}
 
-	public static boolean isG_wcheck() {
-		return g_wcheck;
+	
+	//Methode qui retourne si le roi est en echec = true
+	public static boolean isG_Kcheck(Plate plate,Player player) {
+		
+		ArrayList<Piece> listeToutAccessibles = new ArrayList<Piece>();
+		King target = new King();
+		boolean check = false;
+		
+		listeToutAccessibles = ArrayAllPieceAccessible(plate,player);
+		
+		
+		if (player.getM_color() == "w")
+		{
+			if (listeToutAccessibles!= null)
+			{
+				for (int i = 0;i < listeToutAccessibles.size();i++)
+				{	
+					if (listeToutAccessibles.get(i).getColor() == "b" && listeToutAccessibles.get(i).getClass() == target.getClass() )
+					{
+						check = true;
+					}
+				}	
+				if (check)
+				{
+				System.out.print("Le joueur noir est en échec");
+				}
+			}
+		}
+		else
+		{
+			if (listeToutAccessibles!= null)
+			{
+				for (int i = 0;i < listeToutAccessibles.size();i++)
+				{	
+					if (listeToutAccessibles.get(i).getColor() == "w" && listeToutAccessibles.get(i).getClass() == target.getClass() )
+					{
+						check = true;
+					}
+				}
+				if (check)
+				{
+				System.out.print("Le joueur blanc est en échec");
+				}
+			}
+		}
+		
+		return check;
+	}
+	
+	
+	//Methode 
+	public static ArrayList<Piece> ArrayAllPieceAccessible(Plate plate,Player player)
+	{
+		Piece[][] Tableau = new Piece[8][8];
+		Tableau = plate.getPlate();
+		
+		ArrayList<Piece> listeToutAccessibles = new ArrayList<Piece>();
+		ArrayList<Piece> listeAccessibles = new ArrayList<Piece>();
+		
+		for(int i =0; i < 8; i++)
+		{
+			for(int j = 0; j < 8; j++)
+			{
+				listeAccessibles = Tableau[j][i].accessibleCells(plate);
+				if (listeAccessibles != null)
+				{	
+					for (int y=0; y < Tableau[j][i].accessibleCells(plate).size();y++)
+					{	
+						if ((listeAccessibles.get(y).getColor() != player.getM_color()))
+						{
+							listeToutAccessibles.add(listeAccessibles.get(y));		
+						}	
+					}
+				}
+			}
+		}
+		
+		return listeToutAccessibles;
 	}
 
-	public static boolean isG_bcheck() {
-		return g_bcheck;
-	}
 
 	// Méthode instanciant les 16 pièces du joueur et les plaçant sur le plateau de jeu
 	public static void givePiecesToPlayer(Player play, Plate plateau)
@@ -145,8 +221,7 @@ public class Game {
 		 * Remettre les cases à leur couleur de base
 		 */
 		g_plateau = new Plate();
-		g_bcheck = false;
-		g_wcheck = false;
+		g_Kcheck = false;
 		p_white = new Player("White Player", "w");
 		p_black = new Player("Black Player", "b");
 		
@@ -219,8 +294,7 @@ public class Game {
 			return false;
 		}
 	}
-	
-	
+		
 	public static void main (String args[])
 	{
 		g_window = new Display();

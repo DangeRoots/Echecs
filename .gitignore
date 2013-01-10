@@ -1,0 +1,11 @@
+# Non suivi des fichiers .class (compilés),
+# des fichiers temp, et du dossier bin/
+#
+*.class
+*.*~
+
+bin/game/
+bin/pieces/
+bin/tests/
+bin/view/
+bin/

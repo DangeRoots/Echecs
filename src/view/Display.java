@@ -1,4 +1,5 @@
 package view;
+import game.Game;
 import game.Plate;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,8 +13,10 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -52,10 +55,18 @@ public class Display extends JFrame{
 	public Plate Plateau = new Plate();
 	public JButton[][] cells = new JButton[8][8];
 	
+	//affichage du nom du joueur
+	JLabel player = new JLabel("Player");
+
+	
 	// compteur et variable de position
 	private int compteurClics=0;
 	private int posX = 0;
 	private int posY = 0;
+	private boolean initialized = false;
+	private Color color;
+	private boolean badselec = false;
+
 
 /*--------------------------------------------------------------------------------------------------------------------------------------------
 # Constructeur de class
@@ -69,7 +80,7 @@ public class Display extends JFrame{
 		this.setResizable(false);
 		
 		//On initialise le conteneur avec tous les composants
-		initDisplay();
+		
 		initMenu();
 		
 		this.setJMenuBar(menuBar);
@@ -86,6 +97,19 @@ public class Display extends JFrame{
 	    leave.addActionListener(new ActionListener(){
 	        public void actionPerformed(ActionEvent arg0) {
 	          System.exit(0);
+	        }      
+	      });
+	    
+	    newGame.addActionListener(new ActionListener(){
+	        public void actionPerformed(ActionEvent arg0) {
+	          	
+	        	if (initialized == false)
+	        	{
+	        		initDisplay();
+	        		initialized = true;
+	        	}
+	        	Plateau = Game.initGame(); 
+	        	refreshDisplay(Plateau);
 	        }      
 	      });
 	    
@@ -172,19 +196,45 @@ public class Display extends JFrame{
 	class Selection implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e) {
-
+			
 			compteurClics++;
 
 			if (compteurClics == 1)
-			{			
-
+			{	
+				
+				/**if (badselec)
+				{
+					cells[posX][posY].setBackground(color);
+					badselec = false;
+				}*/
+				
 			// position de la cellule
 			String positionDebut = e.getActionCommand();
 			int xd = Integer.parseInt(String.valueOf(positionDebut.charAt(0)));
-			int yd = Integer.parseInt(String.valueOf(positionDebut.charAt(1)));
-			
+			int yd = Integer.parseInt(String.valueOf(positionDebut.charAt(1)));		
 			posX = xd;
 			posY = yd;
+			
+			if (!Game.isClickable( pieces[posX][posY]))
+			{
+				
+				/*JButton cells = (JButton)e.getSource();
+				color = cells.getBackground();
+				((JComponent) e.getSource()).setBackground(Color.red);
+				badselec = true;
+				*/
+				
+				System.out.println("Sélection impossible");
+				compteurClics = 0;
+				
+			}
+			else 
+			{
+				
+				JButton cells = (JButton)e.getSource();
+				color = cells.getBackground();
+				((JComponent) e.getSource()).setBackground(Color.green);
+			}
 				
 			}
 
@@ -201,14 +251,17 @@ public class Display extends JFrame{
 			ArrayList<Piece> possibleMove = new ArrayList<Piece>();
 			possibleMove = pieces[posX][posY].accessibleCells(Plateau);
 			
-			if (possibleMove.size() == 0)
+
+			if (possibleMove == null)
 			{
 				System.out.print("Rien");
+				cells[posX][posY].setBackground(color);
 			}
 			else{
-				
+				cells[posX][posY].setBackground(color);
 				for (Piece pos : possibleMove)
 				{
+				
 					
 					if (pos.getRow()==yf && pos.getColumn()==xf)
 					{												
@@ -216,14 +269,17 @@ public class Display extends JFrame{
 						Plateau.setPiece(pieces[posX][posY], yf, xf);				
 						Piece empty = new Empty();			
 						Plateau.setPiece(empty, posY, posX);					
-				
+									
+						cells[posX][posY].setBackground(color);
+						
 						refreshDisplay(Plateau);
 						
 						posX = 0;
 						posY = 0;
-						
+						Game.endTurn();
 					}
 				}
+				
 				
 			}
 			

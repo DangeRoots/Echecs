@@ -6,8 +6,10 @@ import pieces.Piece;
 public class Plate {
 	
 	Piece[][] plate;
+	private int boardSize;
 	
 	public Plate() {
+		boardSize = 8;
 		plate = new Piece[8][8];
 		for (int i=0;i<8;i++)
 		{
@@ -16,9 +18,30 @@ public class Plate {
 				Empty pic = new Empty();
 				pic.setPosition(i,j);
 				plate[i][j] = pic;
-				
 			}
 		}
+	}
+	
+	public Plate(String variante) {
+		if (variante == "capablanca")
+		{
+			boardSize = 10;
+			plate = new Piece[10][8];
+			for (int i=0;i<10;i++)
+			{
+				for (int j=0;j<8;j++)
+				{
+					Empty pic = new Empty();
+					pic.setPosition(i,j);
+					plate[i][j] = pic;
+				}
+			}
+			
+		}
+	}
+
+	public int getBoardSize() {
+		 return boardSize;
 	}
 	
 	public Piece [][] getPlate() {

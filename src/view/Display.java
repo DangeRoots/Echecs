@@ -11,6 +11,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener; 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -19,10 +21,12 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+
 
 import pieces.Empty;
 import pieces.Piece;
@@ -36,6 +40,8 @@ public class Display extends JFrame{
 
 	// container de la fenetre et barre de menu
 	private JPanel container = new JPanel();
+	private JPanel header = new JPanel();
+	private JPanel AdvanceInterface = new JPanel();
 	private JMenuBar menuBar = new JMenuBar();
 	
 	//Item du menu
@@ -56,7 +62,10 @@ public class Display extends JFrame{
 	public JButton[][] cells = new JButton[8][8];
 	
 	//affichage du nom du joueur
-	JLabel player = new JLabel("Player");
+	private JLabel player = new JLabel("White Player");
+	
+	//Affichage console
+	private JList affichageConsole = new JList();
 
 	
 	// compteur et variable de position
@@ -65,7 +74,7 @@ public class Display extends JFrame{
 	private int posY = 0;
 	private boolean initialized = false;
 	private Color color;
-	private boolean badselec = false;
+	private JButton hover;
 
 
 /*--------------------------------------------------------------------------------------------------------------------------------------------
@@ -73,7 +82,7 @@ public class Display extends JFrame{
 --------------------------------------------------------------------------------------------------------------------------------------------*/
 	public Display(){
 
-		this.setSize(800, 800);
+		this.setSize(1000, 930);
 		this.setTitle("Echiquier");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
@@ -84,7 +93,17 @@ public class Display extends JFrame{
 		initMenu();
 		
 		this.setJMenuBar(menuBar);
-		this.setContentPane(container);
+
+		AdvanceInterface.setLayout(new BorderLayout());
+		player.setFont(new Font("Dialog", 1, 25));
+		
+		AdvanceInterface.add(player, BorderLayout.PAGE_START);
+		container.setPreferredSize(new Dimension(1000,800));
+		AdvanceInterface.add(container, BorderLayout.CENTER);	
+		affichageConsole.setPreferredSize(new Dimension(900,100));
+		AdvanceInterface.add(affichageConsole, BorderLayout.PAGE_END);
+		
+		this.setContentPane(AdvanceInterface);
 		this.setVisible(true);
 	}
 	
@@ -190,23 +209,26 @@ public class Display extends JFrame{
 	
 /*--------------------------------------------------------------------------------------------------------------------------------------------
 # Gestionnaire d'evenement : 
-# gère le clic sur l'echiquier.
---------------------------------------------------------------------------------------------------------------------------------------------*/
+ gère le clic sur l'echiquier.
+-------------------------------------------------------------------------------------------------------------------------------------------*/
+			
 
 	class Selection implements ActionListener
 	{
+		
+		
+
 		public void actionPerformed(ActionEvent e) {
+			
+			Timer timer = new Timer();
+			
+			
 			
 			compteurClics++;
 
 			if (compteurClics == 1)
 			{	
-				
-				/**if (badselec)
-				{
-					cells[posX][posY].setBackground(color);
-					badselec = false;
-				}*/
+		
 				
 			// position de la cellule
 			String positionDebut = e.getActionCommand();
@@ -214,15 +236,22 @@ public class Display extends JFrame{
 			int yd = Integer.parseInt(String.valueOf(positionDebut.charAt(1)));		
 			posX = xd;
 			posY = yd;
-			
 			if (!Game.isClickable( pieces[posX][posY]))
 			{
-				
-				/*JButton cells = (JButton)e.getSource();
-				color = cells.getBackground();
-				((JComponent) e.getSource()).setBackground(Color.red);
-				badselec = true;
-				*/
+				hover = (JButton) e.getSource();
+				color = hover.getBackground();
+				//System.out.println("Passage à red");
+				hover.setBackground(Color.red);
+				timer.schedule(new TimerTask()
+				{
+					public void run()
+					{
+						
+						//System.out.println("Passage à bg");
+						hover.setBackground(color);
+					}
+				}			
+				, 500);
 				
 				System.out.println("Sélection impossible");
 				compteurClics = 0;
@@ -277,9 +306,9 @@ public class Display extends JFrame{
 						posX = 0;
 						posY = 0;
 						Game.endTurn();
+						player.setText(Game.getActive_player().getM_name());
 					}
-				}
-				
+				}	
 				
 			}
 			
@@ -287,4 +316,5 @@ public class Display extends JFrame{
 		}
 		
 	}
+	
 }

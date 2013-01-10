@@ -5,6 +5,7 @@ import game.Plate;
 import java.util.ArrayList;
 
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 // bishop and a knight.
 public class Archbishop extends Piece {
@@ -44,8 +45,15 @@ public class Archbishop extends Piece {
 
 	@Override
 	public Icon getIcon() {
-		// TODO Auto-generated method stub
-		return null;
+		if (this.getColor()=="w")
+		{
+			Icon img = new ImageIcon("./img/warchbishop.png");
+			return img;
+		}
+		else {
+			Icon img = new ImageIcon("./img/barchbishop.png");
+			return img;
+		}
 	}
 
 	@Override

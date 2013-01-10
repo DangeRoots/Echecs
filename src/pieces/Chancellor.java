@@ -5,6 +5,7 @@ import game.Plate;
 import java.util.ArrayList;
 
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 
 // rook and a knight
@@ -45,8 +46,15 @@ public class Chancellor extends Piece {
 
 	@Override
 	public Icon getIcon() {
-		// TODO Auto-generated method stub
-		return null;
+		if (this.getColor()=="w")
+		{
+			Icon img = new ImageIcon("./img/wchancellor.png");
+			return img;
+		}
+		else {
+			Icon img = new ImageIcon("./img/bchancellor.png");
+			return img;
+		}
 	}
 
 	@Override

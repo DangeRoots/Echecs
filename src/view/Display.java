@@ -267,6 +267,7 @@ public class Display extends JFrame{
 
 			Timer timer = new Timer();
 			compteurClics++;
+			boolean ClicValide = false;
 
 			if (compteurClics == 1)
 			{		
@@ -315,17 +316,18 @@ public class Display extends JFrame{
 				}
 				else 
 				{
-
+					ClicValide = true;
 					JButton cells = (JButton)e.getSource();
 					color = cells.getBackground();
-					((JComponent) e.getSource()).setBackground(Color.green);
+					
+					((JComponent) e.getSource()).setBackground(new Color(33,142,48));
 				}		
 
 			}
 
 			if (compteurClics == 2)
 			{			
-
+				DisplayPlateColor(Nbx, Nby);
 				compteurClics=0;
 
 				// position de la cellule
@@ -366,35 +368,43 @@ public class Display extends JFrame{
 							if (kingTarget.getColor() == Game.getActive_player().getM_color())
 							{					
 								Plateau.setPiece(pieces[xf][yf],posY ,posX );
-								Plateau.setPiece(oldPiece, yf, xf);		
+								Plateau.setPiece(oldPiece, yf, xf);									
 								player.setText("Vous êtes en echec");
+								
 							}
 							else
 							{				
 								cells[posX][posY].setBackground(color);
 								Game.endTurn();
 								player.setText(Game.getActive_player().getM_name());
+								
 							}
 
 							refreshDisplay(Plateau);
+													
+							posX = 0;
+							posY = 0;
+							DisplayPlateColor(Nbx, Nby);
 							
+							// si le roi est en echec
 							if (Game.getG_Kcheck()==true)
 							{
 								player.setText("Echec au roi");
 								player.setForeground(Color.red);
+								int x = kingTarget.getColumn();
+								int y = kingTarget.getRow();	
+								
+								cells[x][y].setBackground(Color.red);
+								
 							}
-							
+							else
+							{
+								DisplayPlateColor(Nbx, Nby);
+								player.setForeground(Color.BLACK);
+							}
+						}
 
-							posX = 0;
-							posY = 0;
-							DisplayPlateColor(Nbx, Nby);
-						}
-						else 
-						{
-							DisplayPlateColor(Nbx, Nby);
-						}
 					}	
-
 				}
 
 			}

@@ -374,20 +374,25 @@ public class Display extends JFrame{
 								cells[posX][posY].setBackground(color);
 								Game.endTurn();
 								player.setText(Game.getActive_player().getM_name());
+								
 							}
 
 							refreshDisplay(Plateau);
+													
+							posX = 0;
+							posY = 0;
+							DisplayPlateColor(Nbx, Nby);
 							
 							if (Game.getG_Kcheck()==true)
 							{
 								player.setText("Echec au roi");
 								player.setForeground(Color.red);
+								int x = kingTarget.getColumn();
+								int y = kingTarget.getRow();
+								
+								cells[x][y].setBackground(Color.red);
+								
 							}
-							
-
-							posX = 0;
-							posY = 0;
-							DisplayPlateColor(Nbx, Nby);
 						}
 						else 
 						{

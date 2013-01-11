@@ -8,6 +8,7 @@ public class Player {
 	private String m_color;
 	// Stockage des pièces prises par le joueur
 	private Piece[] m_pieces_taken;
+	private DTimer m_timer;
 	
 	/**
 	 * Constructeur de la classe
@@ -19,8 +20,21 @@ public class Player {
 		m_name = mName;
 		m_color = mColor;
 		m_pieces_taken = new Piece[16];
+		m_timer = new DTimer(m_name);
 	}
 	
+	public DTimer getM_timer() {
+		return m_timer;
+	}
+
+
+
+	public void setM_timer(DTimer mTimer) {
+		m_timer = mTimer;
+	}
+
+
+
 	/**
 	 * Retourne les pieces prises par le joueur
 	 * @return Piece[], un tableau contenant les pieces prises

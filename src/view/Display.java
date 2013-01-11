@@ -1,4 +1,5 @@
 package view;
+import game.DTimer;
 import game.Game;
 import game.Plate;
 
@@ -61,8 +62,13 @@ public class Display extends JFrame{
 	JLabel player = new JLabel("White Player");
 
 	//Affichage console
-	private JList affichageConsole = new JList();
-
+	//private JList affichageConsole = new JList();
+	
+	// Affichage timers
+	JPanel l_timer_zone;
+	JPanel r_timer_zone;
+	DTimer btimer;
+	DTimer wtimer;
 
 	// compteur et variable de position
 	private int compteurClics=0;
@@ -85,7 +91,7 @@ public class Display extends JFrame{
 --------------------------------------------------------------------------------------------------------------------------------------------*/
 	public Display(){
 
-		this.setSize(1000, 930);
+		this.setSize(1250, 930);
 		this.setTitle("Echiquier");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
@@ -100,6 +106,8 @@ public class Display extends JFrame{
 		AdvanceInterface.setLayout(new BorderLayout());
 		player.setFont(new Font("Dialog", 1, 25));
 		player.setPreferredSize(new Dimension(1000, 30));
+		
+		player.setText("Chess Master");
 		JPanel header = new JPanel();
 		header.setLayout(new BorderLayout());
 		
@@ -108,17 +116,26 @@ public class Display extends JFrame{
 		header.add(player, BorderLayout.CENTER);
 		JLabel EastBlock = new JLabel("");
 		
-		EastBlock.setPreferredSize(new Dimension(410,50));
+		EastBlock.setPreferredSize(new Dimension(530,50));
 		header.add(EastBlock, BorderLayout.WEST);
 		
 		AdvanceInterface.add(header, BorderLayout.PAGE_START);
 		
 	//	AdvanceInterface.add(player, BorderLayout.PAGE_START);
-		container.setPreferredSize(new Dimension(1000,800));
+		container.setPreferredSize(new Dimension(900,800));
 		AdvanceInterface.add(container, BorderLayout.CENTER);	
-		affichageConsole.setPreferredSize(new Dimension(900,100));
+		
+		/*affichageConsole.setPreferredSize(new Dimension(900,100));
 		AdvanceInterface.add(affichageConsole, BorderLayout.PAGE_END);
+		*/
+		l_timer_zone = new JPanel();
+		l_timer_zone.setPreferredSize(new Dimension(150, 150));
+		r_timer_zone = new JPanel();
+		r_timer_zone.setPreferredSize(new Dimension(150, 150));
+		AdvanceInterface.add(l_timer_zone, BorderLayout.WEST);
+		AdvanceInterface.add(r_timer_zone, BorderLayout.EAST);
 
+		
 		this.setContentPane(AdvanceInterface);
 		this.setVisible(true);
 	}
@@ -140,13 +157,24 @@ public class Display extends JFrame{
 		newGame.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 
+				AdvanceInterface.remove(l_timer_zone);
+				l_timer_zone = new JPanel();
+				AdvanceInterface.add(l_timer_zone, BorderLayout.WEST);
+				AdvanceInterface.remove(r_timer_zone);
+				r_timer_zone = new JPanel();
+				AdvanceInterface.add(r_timer_zone, BorderLayout.EAST);
 				AdvanceInterface.remove(container);
 				container = new JPanel();
 				AdvanceInterface.add(container, BorderLayout.CENTER);
 				initDisplay(false);
-
-				Plateau = Game.initGame(); 
+				Plateau = Game.initGame();
+				wtimer = Game.getP_white().getM_timer();
+				l_timer_zone.add(wtimer, BorderLayout.CENTER);
+				btimer = Game.getP_black().getM_timer();
+				r_timer_zone.add(btimer, BorderLayout.CENTER);
+				player.setText(Game.getActive_player().getM_name());
 				refreshDisplay(Plateau);
+				wtimer.startDTimer();
 			}      
 		});
 
@@ -154,14 +182,24 @@ public class Display extends JFrame{
 		CapaBlanca.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 
-
+				AdvanceInterface.remove(l_timer_zone);
+				l_timer_zone = new JPanel();
+				AdvanceInterface.add(l_timer_zone, BorderLayout.WEST);
+				AdvanceInterface.remove(r_timer_zone);
+				r_timer_zone = new JPanel();
+				AdvanceInterface.add(r_timer_zone, BorderLayout.EAST);
 				AdvanceInterface.remove(container);
 				container = new JPanel();
 				AdvanceInterface.add(container, BorderLayout.CENTER);	
 				initDisplay(true);
-
 				Plateau = Game.initGame("capablanca"); 
+				wtimer = Game.getP_white().getM_timer();
+				l_timer_zone.add(wtimer, BorderLayout.CENTER);
+				btimer = Game.getP_black().getM_timer();
+				r_timer_zone.add(btimer, BorderLayout.CENTER);
+				player.setText(Game.getActive_player().getM_name());
 				refreshDisplay(Plateau);
+				wtimer.startDTimer();
 			}      
 		});
 
@@ -360,7 +398,7 @@ public class Display extends JFrame{
 							
 							Plateau.setPiece(pieces[posX][posY], yf, xf);		
 							Plateau.setPiece(empty, posY, posX);
-							System.out.println(Plateau.getBoardSize());
+							//System.out.println(Plateau.getBoardSize());
 							kingTarget = Game.isG_Kcheck(Plateau, Game.getActive_player());
 							
 

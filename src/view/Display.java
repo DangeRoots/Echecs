@@ -58,7 +58,7 @@ public class Display extends JFrame{
 	Selection Listener = new Selection();
 
 	//affichage du nom du joueur
-	private JLabel player = new JLabel("White Player");
+	JLabel player = new JLabel("White Player");
 
 	//Affichage console
 	private JList affichageConsole = new JList();
@@ -255,11 +255,10 @@ public class Display extends JFrame{
 		}
 	}
 
-	/*--------------------------------------------------------------------------------------------------------------------------------------------
+/*--------------------------------------------------------------------------------------------------------------------------------------------
 # Gestionnaire d'evenement : 
  gère le clic sur l'echiquier.
 -------------------------------------------------------------------------------------------------------------------------------------------*/
-
 
 	class Selection implements ActionListener
 	{
@@ -340,9 +339,6 @@ public class Display extends JFrame{
 
 				if (possibleMove == null)
 				{
-					//	System.out.print("Rien");
-					//	cells[posX][posY].setBackground(color);
-
 					DisplayPlateColor(Nbx, Nby);
 				}
 				else{
@@ -352,51 +348,42 @@ public class Display extends JFrame{
 					for (Piece pos : possibleMove)
 					{
 						
-						/**
-																
-						kingTarget = Game.isG_Kcheck(Plateau, Game.getActive_player());
-						
-						if (kingTarget.getColor() == Game.getActive_player().getM_color())
-						{
-							Plateau.setPiece(pieces[xf][yf],posY ,posX );
-							Plateau.setPiece(empty, yf, xf);
-						}
-						else
-						{					
-						cells[posX][posY].setBackground(color);
-						Game.endTurn();
-						player.setText(Game.getActive_player().getM_name());
-						}
-						
-						refreshDisplay(Plateau);
-						
-						posX = 0;
-						posY = 0;
-					}
-					 */
-						if (pos.getRow()==yf && pos.getColumn()==xf)
-						{	Piece empty = new Empty();
-							Piece kingTarget = new King();			
-							// on crée 2 plateau en 1 ca double les case donc ca plante.
+						// si de clic sur la case de destination est autorisé
+						if (pos.getRow()==yf && pos.getColumn()==xf)			
+						{	
+							Piece empty = new Empty();
+							Piece kingTarget = new King();	
+							Piece oldPiece;
+							oldPiece = pieces[xf][yf];
+							
 							Plateau.setPiece(pieces[posX][posY], yf, xf);		
 							Plateau.setPiece(empty, posY, posX);
 							System.out.println(Plateau.getBoardSize());
 							kingTarget = Game.isG_Kcheck(Plateau, Game.getActive_player());
 							
+
+							// si le roi est en Echec on bloque le mouvement d'une piece
 							if (kingTarget.getColor() == Game.getActive_player().getM_color())
-							{
+							{					
 								Plateau.setPiece(pieces[xf][yf],posY ,posX );
-								Plateau.setPiece(empty, yf, xf);
+								Plateau.setPiece(oldPiece, yf, xf);		
+								player.setText("Vous êtes en echec");
 							}
 							else
 							{				
-							cells[posX][posY].setBackground(color);
-							Game.endTurn();
-							player.setText(Game.getActive_player().getM_name());
+								cells[posX][posY].setBackground(color);
+								Game.endTurn();
+								player.setText(Game.getActive_player().getM_name());
 							}
-							//cells[posX][posY].setBackground(color);
 
 							refreshDisplay(Plateau);
+							
+							if (Game.getG_Kcheck()==true)
+							{
+								player.setText("Echec au roi");
+								player.setForeground(Color.red);
+							}
+							
 
 							posX = 0;
 							posY = 0;
@@ -413,6 +400,7 @@ public class Display extends JFrame{
 			}
 		}
 
+		// actualiser l'affichage du plateau
 		public void DisplayPlateColor(int NbX, int NbY)
 
 		{

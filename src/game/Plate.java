@@ -6,14 +6,15 @@ import pieces.Piece;
 public class Plate {
 	
 	Piece[][] plate;
-	private int boardSize;
+	private int m_boardSize;
+	private int m_height = 8;
 	
 	public Plate() {
-		boardSize = 8;
-		plate = new Piece[8][8];
-		for (int i=0;i<8;i++)
+		m_boardSize = 8;
+		plate = new Piece[m_boardSize][m_height];
+		for (int i = 0; i < m_boardSize; i++)
 		{
-			for (int j=0;j<8;j++)
+			for (int j = 0; j < m_height; j++)
 			{
 				Empty pic = new Empty();
 				pic.setPosition(i,j);
@@ -25,11 +26,11 @@ public class Plate {
 	public Plate(String variante) {
 		if (variante == "capablanca")
 		{
-			boardSize = 10;
-			plate = new Piece[10][8];
-			for (int i=0;i<10;i++)
+			m_boardSize = 10;
+			plate = new Piece[m_boardSize][m_height];
+			for (int i = 0; i < m_boardSize; i++)
 			{
-				for (int j=0;j<8;j++)
+				for (int j = 0; j < m_height; j++)
 				{
 					Empty pic = new Empty();
 					pic.setPosition(i,j);
@@ -41,7 +42,11 @@ public class Plate {
 	}
 
 	public int getBoardSize() {
-		 return boardSize;
+		 return m_boardSize;
+	}
+	
+	public int getHeight() {
+		return m_height;
 	}
 	
 	public Piece [][] getPlate() {
@@ -53,9 +58,7 @@ public class Plate {
 		return plate[y][x];
 	}
 	
-	public void setPiece(Piece piece, int x, int y){
-		/*piece.setRow(y);
-		piece.setColumn(x);*/
+	public void setPiece(Piece piece, int x, int y) {
 		piece.setPosition(y, x);
 		plate[y][x]= piece;
 	}

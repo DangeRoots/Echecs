@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import game.Plate;
 import junit.framework.TestCase;
 
-import org.junit.Test;
-
 import pieces.*;
 
 public class MoveTestsCase extends TestCase {

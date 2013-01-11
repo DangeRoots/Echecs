@@ -76,11 +76,11 @@ public class Rook extends Piece {
 	public Icon getIcon() {
 		if (this.getColor()=="w")
 		{
-			Icon img = new ImageIcon("./img/wrook.png");
+			Icon img = new ImageIcon(getClass().getClassLoader().getResource("wrook.png"));
 			return img;
 		}
 		else {
-			Icon img = new ImageIcon("./img/brook.png");
+			Icon img = new ImageIcon(getClass().getClassLoader().getResource("brook.png"));
 			return img;
 		}
 	}

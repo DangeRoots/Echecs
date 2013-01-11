@@ -40,11 +40,11 @@ public class Queen extends Piece {
 	public Icon getIcon() {
 		if (this.getColor()=="w")
 		{
-			Icon img = new ImageIcon("./img/wqueen.png");
+			Icon img = new ImageIcon(getClass().getClassLoader().getResource("wqueen.png"));
 			return img;
 		}
 		else {
-			Icon img = new ImageIcon("./img/bqueen.png");
+			Icon img = new ImageIcon(getClass().getClassLoader().getResource("bqueen.png"));
 			return img;
 		}	
 	}

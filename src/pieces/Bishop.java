@@ -92,11 +92,11 @@ public class Bishop extends Piece {
 	public Icon getIcon() {
 		if (this.getColor()=="w")
 		{
-			Icon img = new ImageIcon("./img/wbishop.png");
+			Icon img = new ImageIcon(getClass().getClassLoader().getResource("wbishop.png"));
 			return img;
 		}
 		else {
-			Icon img = new ImageIcon("./img/bbishop.png");
+			Icon img = new ImageIcon(getClass().getClassLoader().getResource("bbishop.png"));
 			return img;
 		}
 	}

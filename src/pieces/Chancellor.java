@@ -42,11 +42,11 @@ public class Chancellor extends Piece {
 	public Icon getIcon() {
 		if (this.getColor()=="w")
 		{
-			Icon img = new ImageIcon("./img/wchancellor.png");
+			Icon img = new ImageIcon(getClass().getClassLoader().getResource("wchancellor.png"));
 			return img;
 		}
 		else {
-			Icon img = new ImageIcon("./img/bchancellor.png");
+			Icon img = new ImageIcon(getClass().getClassLoader().getResource("bchancellor.png"));
 			return img;
 		}
 	}

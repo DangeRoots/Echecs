@@ -41,11 +41,11 @@ public class Archbishop extends Piece {
 	public Icon getIcon() {
 		if (this.getColor()=="w")
 		{
-			Icon img = new ImageIcon("./img/warchbishop.png");
+			Icon img = new ImageIcon(getClass().getClassLoader().getResource("warchbishop.png"));
 			return img;
 		}
 		else {
-			Icon img = new ImageIcon("./img/barchbishop.png");
+			Icon img = new ImageIcon(getClass().getClassLoader().getResource("barchbishop.png"));
 			return img;
 		}
 	}

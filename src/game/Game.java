@@ -1,6 +1,15 @@
 package game;
 
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import pieces.Archbishop;
 import pieces.Bishop;
@@ -31,6 +40,11 @@ public class Game {
 	static Plate g_plateau;
 	static boolean g_Kcheck;
 	public static Piece[][] pieces;
+	/* Booléen stockant la cause de la défaite
+	 * Faux pour une défaite par timeout
+	 * Vrai pour une défaite par mat
+	 */
+	static boolean lose_cause;
 	
 	static int width;
 	static int heigth;
@@ -67,7 +81,6 @@ public class Game {
 		listeToutAccessibles = ArrayAllPieceAccessible(plate,player);
 		listeToutAccessiblesParAdverdaire = ArrayAllPieceAccessibleByAdverse(plate, player);
 		
-		//System.out.println("3");
 			if (listeToutAccessiblesParAdverdaire != null)
 			{
 				for (int i = 0;i < listeToutAccessiblesParAdverdaire.size();i++)
@@ -143,21 +156,16 @@ public class Game {
 	//Methode 
 	public static ArrayList<Piece> ArrayAllPieceAccessible(Plate plate,Player player)
 	{
-		//Piece[][] Tableau = new Piece[heigth][width];
-		
-		System.out.println("a");
 		pieces = plate.getPlate();
 		
 		ArrayList<Piece> listeToutAccessibles = new ArrayList<Piece>();
 		ArrayList<Piece> listeAccessibles = new ArrayList<Piece>();
-		System.out.println("b");
 		for(int i =0; i < width; i++)
 		{
 			for(int j = 0; j < heigth; j++)
 			{
-				System.out.println(pieces[i][j]);
 				listeAccessibles = pieces[i][j].accessibleCells(plate);
-				System.out.println("c");
+				
 
 				if (listeAccessibles != null)
 				{	
@@ -433,12 +441,21 @@ pieces = plate.getPlate();
 		 * 	Ensemble des vérifications de fin de tour à implémenter : 
 		 * 	échecs, promotions, etc...
 		 */
+		
+		if (active_player.getM_timer().isFinish())
+		{
+			lose_cause = false;
+			g_ended = true;
+		}
+		
 		if (!g_ended) 
 		{
+			active_player.getM_timer().stopDTimer();
 			beginNewTurn();
 		}
 		else 
 		{
+			System.out.println("Fini");
 			endGame();
 		}
 	}
@@ -446,7 +463,61 @@ pieces = plate.getPlate();
 	//Méthode appelée lorsque la partie est terminée
 	public static void endGame()
 	{
+		final JFrame game_end = new JFrame("Partie terminée");
+		JPanel container = new JPanel();
+		game_end.setContentPane(container);
+		JLabel game_over_text = new JLabel();
+		if (lose_cause == false)
+		{
+			game_over_text.setText("Fin du temps écoulé, la partie est terminée, " + active_player.getM_name() + " a perdu !");
+		}
+		else
+		{
+			game_over_text.setText("Echec et Mat, la partie est terminée, " + active_player.getM_name() + " a perdu !");
+		}
+		game_over_text.setFont(new Font("Dialog", 1, 24));
+		container.add(game_over_text, BorderLayout.CENTER);
+		game_end.setSize(1000, 100);
+		game_end.setLocation(500, 500);
+		game_end.setAlwaysOnTop(true);
+		game_end.setVisible(true);
 		
+		//JPanel buttonContainer = new JPanel();
+		//JButton new_classic = new JButton("Nouvelle partie classique");
+		//JButton new_capa = new JButton("Nouvelle partie capablanca");
+		JButton leave = new JButton("Quitter");
+		
+		 /*new_classic.addActionListener(new ActionListener() {
+			 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	                initGame();
+	                game_end.dispose();
+	            }
+	        });      
+		 new_capa.addActionListener(new ActionListener() {
+			 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	                initGame("capablanca");
+	                game_end.dispose();
+	            }
+	        });
+		 */
+		 leave.addActionListener(new ActionListener() {
+			 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	                System.exit(0);
+	            }
+	        }); 
+		 
+		 //buttonContainer.add(new_classic, BorderLayout.WEST);
+		 //buttonContainer.add(new_capa, BorderLayout.CENTER);
+		 //buttonContainer.add(leave, BorderLayout.CENTER);
+		 
+		 container.add(leave, BorderLayout.SOUTH);
+
 	}
 	
 	/*
@@ -466,6 +537,8 @@ pieces = plate.getPlate();
 		}
 		System.out.println("Nouveau joueur : " + active_player.getM_name());
 
+		active_player.getM_timer().startDTimer();
+
 	}
 	
 	public static boolean isClickable(Piece clicked_piece)
@@ -483,8 +556,6 @@ pieces = plate.getPlate();
 	public static void main (String args[])
 	{
 		g_window = new Display();
-		
-		initGame();
 		
 		/*	Déroulement d'un tour de jeu
 		 * 	Initialisation du nouveau tour 			-> beginNewTurn()

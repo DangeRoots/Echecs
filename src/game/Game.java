@@ -36,6 +36,10 @@ public class Game {
 	static int heigth;
 	
 	
+	public static boolean getG_Kcheck() {
+		return g_Kcheck;
+	}
+
 	public static Player getActive_player() {
 		return active_player;
 	}
@@ -58,7 +62,7 @@ public class Game {
 		ArrayList<Piece> listeToutAccessiblesParAdverdaire = new ArrayList<Piece>();
 		
 		King target = new King();
-		boolean check = false;
+		g_Kcheck = false;
 		
 		listeToutAccessibles = ArrayAllPieceAccessible(plate,player);
 		listeToutAccessiblesParAdverdaire = ArrayAllPieceAccessibleByAdverse(plate, player);
@@ -71,7 +75,7 @@ public class Game {
 					//Si le roi du joueur apparait dans la liste des mouvements de l'adversaire on interdit le mouvement
 					if (listeToutAccessiblesParAdverdaire.get(i).getClass() == target.getClass() )
 					{
-						check = true;
+						g_Kcheck = true;
 						target = (King)listeToutAccessiblesParAdverdaire.get(i);
 						System.out.println("Déplacement interdit");
 					}
@@ -84,13 +88,13 @@ public class Game {
 					//Si le roi du joueur adverse apparait dans la liste de nos mouvements on le met en échec
 					if (listeToutAccessibles.get(j).getClass() == target.getClass() )
 					{
-						check = true;
+						g_Kcheck = true;
 						target = (King)listeToutAccessibles.get(j);
 					}
 				}	
 			}
 				
-			if (check)
+			if (g_Kcheck)
 			{
 				if (target.getColor() == "b")
 				{
@@ -104,6 +108,37 @@ public class Game {
 		
 		return target;
 	}
+	
+	
+	public static boolean isG_Kmate(Plate plate,Player player,Piece enemy) {
+		
+		boolean is_CheckMate = false;
+		King kingInCheckMate = new King();
+		//liste des mouvement disponible pour le joueur
+		ArrayList<Piece> listeToutAccessibles = new ArrayList<Piece>();
+		//liste des mouvement disponible pour le joueur adverse
+		
+		listeToutAccessibles = ArrayAllPieceAccessible(plate, player);
+		
+		kingInCheckMate = isG_Kcheck(plate, player);
+		
+		if (g_Kcheck)
+		{
+			if (listeToutAccessibles != null)
+			{
+				for (int i = 0;i < listeToutAccessibles.size();i++)
+				{	
+					if (!listeToutAccessibles.contains(enemy))
+					{
+						is_CheckMate = true;
+					}
+				}
+			}
+		}
+		
+		return is_CheckMate;
+	}
+	
 	
 	//Methode 
 	public static ArrayList<Piece> ArrayAllPieceAccessible(Plate plate,Player player)
@@ -451,8 +486,6 @@ pieces = plate.getPlate();
 		
 		initGame();
 		
-	//	g_window.refreshDisplay(g_plateau);
-		
 		/*	Déroulement d'un tour de jeu
 		 * 	Initialisation du nouveau tour 			-> beginNewTurn()
 		 * 	Passage de la main à la partie graphique
@@ -463,7 +496,5 @@ pieces = plate.getPlate();
 		 * 			-> ou endGame() dans le cas où la partie s'est terminée au cours du dernier tour.
 		 */
 		
-
-
 	}
 }

@@ -20,34 +20,34 @@ public class Bishop extends Piece {
 			int x = this.getRow();
 			int y = this.getColumn();
 			//Sud Est
-			if (y < plate.getBoardSize()-1 && x < 7)
-				for (int i = 1; i < 8-x; i++ )
+			if (y < plate.getBoardSize()-1 && x < plate.getHeight()-1)
+				for (int i = 1; i < plate.getHeight()-x; i++ )
 				{
-					if (x+i<8 && y+i<plate.getBoardSize())
+					if (x+i < plate.getHeight() && y+ i < plate.getBoardSize())
 					{
 						if (plate.getPiece(x+i,y+i).getColor()==this.getColor())
-							i = 10;
+							i = plate.getBoardSize() + 1;
 						else
 						{
 							accessibles.add(plate.getPiece(x+i,y+i));
 							if (plate.getPiece(x+i,y+i).getColor()!="e")
-								i = 10;
+								i = plate.getBoardSize() + 1;
 						}
 					}
 				}
 			//Nord Est
-			if ( x> 0 && y < plate.getBoardSize()-1)
+			if ( x > 0 && y < plate.getBoardSize()-1)
 				for (int i = 1; i < plate.getBoardSize()-y; i++ )
 				{
-					if (x-i>=0 && y+i<plate.getBoardSize())
+					if (x-i >= 0 && y+i<plate.getBoardSize())
 					{
 						if (plate.getPiece(x-i,y+i).getColor()==this.getColor())
-							i = 10;
+							i = plate.getBoardSize() + 1;
 						else
 						{
 							accessibles.add(plate.getPiece(x-i,y+i));
 							if (plate.getPiece(x-i,y+i).getColor()!="e")
-								i = 10;
+								i = plate.getBoardSize() + 1;
 						}
 					}
 				}
@@ -58,40 +58,34 @@ public class Bishop extends Piece {
 					if (x-i>=0 && y-i>=0)
 					{
 						if (plate.getPiece(x-i,y-i).getColor()==this.getColor())
-							i = 10;
+							i = plate.getBoardSize() + 1;
 						else
 						{
 							accessibles.add(plate.getPiece(x-i,y-i));
 							if (plate.getPiece(x-i,y-i).getColor()!="e")
-								i = 10;
+								i = plate.getBoardSize() + 1;
 						}
 					}
 				}
 			//Sud Ouest
-			if (x < 7 && y > 0)
+			if (x < plate.getHeight()-1 && y > 0)
 				for (int i = 1; i <= y; i++ )
 				{
-					if (x+i<8 && y-i>=0)
+					if (x+i < plate.getHeight() && y-i >= 0)
 					{
 						if (plate.getPiece(x+i,y-i).getColor()==this.getColor())
-							i = 10;
+							i = plate.getBoardSize() + 1;
 						else
 						{
 							accessibles.add(plate.getPiece(x+i,y-i));
 							if (plate.getPiece(x+i,y-i).getColor()!="e")
-								i = 10;
+								i = plate.getBoardSize() + 1;
 						}
 					}
 				}
-			
+
 			return accessibles;
 		}
-	}
-
-	@Override
-	boolean canMove(Piece piece) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
@@ -108,15 +102,8 @@ public class Bishop extends Piece {
 	}
 
 	@Override
-	boolean move(Piece piece) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Je suis un fou ! et ma position est : " + getRow() + " " + getColumn());			
 	}
 
 

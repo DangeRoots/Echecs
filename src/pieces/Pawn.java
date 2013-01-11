@@ -24,7 +24,7 @@ public class Pawn extends Piece {
 			//Cas d'une piece blanche
 			if(this.getColor() == "w") {			
 				// premier deplacement = 2 cases
-				if(x == 6 && plate.getPiece(x-1, y).getColor()=="e" && plate.getPiece(x-2, y).getColor()=="e")
+				if(x == plate.getHeight()-2 && plate.getPiece(x-1, y).getColor()=="e" && plate.getPiece(x-2, y).getColor()=="e")
 					accessibles.add(plate.getPiece(x-2, y));
 				// deplacement normal
 				if (x > 0 && plate.getPiece(x-1, y).getColor()=="e")
@@ -43,13 +43,13 @@ public class Pawn extends Piece {
 				if( x == 1 && plate.getPiece(x+1, y).getColor()=="e" && plate.getPiece(x+2, y).getColor()=="e")					
 					accessibles.add(plate.getPiece(x+2, y));
 				// deplacement normal
-				if(x < 7 && plate.getPiece(x+1,y).getColor()=="e")
+				if(x < plate.getHeight()-1 && plate.getPiece(x+1,y).getColor()=="e")
 					accessibles.add(plate.getPiece(x+1, y));
 				//diagonale gauche
-				if(x < 7 && y>0 && plate.getPiece(x+1, y-1).getColor() == "w")
+				if(x < plate.getHeight()-1 && y>0 && plate.getPiece(x+1, y-1).getColor() == "w")
 					accessibles.add(plate.getPiece(x+1, y-1));
 				//diagonale droite
-				if (x < 7 && y<plate.getBoardSize()-1 && plate.getPiece(x+1, y+1).getColor() == "w")
+				if (x < plate.getHeight()-1 && y<plate.getBoardSize()-1 && plate.getPiece(x+1, y+1).getColor() == "w")
 					accessibles.add(plate.getPiece(x+1, y+1));
 			}			
 			return accessibles;
@@ -58,24 +58,8 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	boolean canMove(Piece piece) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	boolean move(Piece piece) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	public void show(){
-		System.out.println("Je suis un pion ! et ma position est : "+getRow() + " " + getColumn());
-	}
-
-	@Override
 	public Icon getIcon() {
-		
+
 		if (this.getColor()=="w")
 		{
 			Icon img = new ImageIcon("./img/wpawn.png");
@@ -85,8 +69,10 @@ public class Pawn extends Piece {
 			Icon img = new ImageIcon("./img/bpawn.png");
 			return img;
 		}
+	}
 
-		
+	public void show(){
+		System.out.println("Je suis un pion ! et ma position est : "+getRow() + " " + getColumn());
 	}
 
 }

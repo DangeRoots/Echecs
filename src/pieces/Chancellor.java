@@ -39,12 +39,6 @@ public class Chancellor extends Piece {
 	}
 
 	@Override
-	boolean canMove(Piece piece) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public Icon getIcon() {
 		if (this.getColor()=="w")
 		{
@@ -58,15 +52,8 @@ public class Chancellor extends Piece {
 	}
 
 	@Override
-	boolean move(Piece piece) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-
+		System.out.println("Je suis une impératrice ! et ma position est : " + getRow() + " " + getColumn());	
 	}
 
 }

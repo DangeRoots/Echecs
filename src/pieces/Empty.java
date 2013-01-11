@@ -14,30 +14,16 @@ public class Empty extends Piece {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-
-	@Override
-	boolean canMove(Piece piece) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	boolean move(Piece piece) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void show() {
-		System.out.println("Je suis un empty ! et ma position est : " + getRow() + " " + getColumn());
-	}
-
 
 	@Override
 	public Icon getIcon() {
 		Icon img = new ImageIcon("");
 		return img;
+	}
+
+	@Override
+	public void show() {
+		System.out.println("Je suis vide ! et ma position est : " + getRow() + " " + getColumn());
 	}
 
 }

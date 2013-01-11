@@ -23,7 +23,7 @@ public class Queen extends Piece {
 			rook.setPosition(this.getColumn(),this.getRow());
 			ArrayList<Piece> accessRook = new ArrayList<Piece>();
 			accessRook = rook.accessibleCells(plate);
-			for (int i=0;i<accessRook.size();i++)
+			for (int i = 0; i < accessRook.size(); i++)
 				accessibles.add(accessRook.get(i));
 			Bishop bishop = new Bishop();
 			ArrayList<Piece> accessBishop = new ArrayList<Piece>();
@@ -34,12 +34,6 @@ public class Queen extends Piece {
 				accessibles.add(accessBishop.get(i));
 			return accessibles;
 		}
-	}
-
-	@Override
-	boolean canMove(Piece piece) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
@@ -56,15 +50,7 @@ public class Queen extends Piece {
 	}
 
 	@Override
-	boolean move(Piece piece) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Je suis une reine ! et ma position est : "+getRow() + " " + getColumn());
 	}
-
 }

@@ -19,7 +19,7 @@ public class King extends Piece{
 			int x = this.getRow();
 			int y = this.getColumn();
 			//Sud
-			if (x < 7 && plate.getPiece(x+1, y).getColor()!=this.getColor())
+			if (x < plate.getHeight()-1 && plate.getPiece(x+1, y).getColor()!=this.getColor())
 				accessibles.add(plate.getPiece(x+1, y));
 			//Nord
 			if (x > 0 && plate.getPiece(x-1, y).getColor()!= this.getColor())
@@ -27,29 +27,23 @@ public class King extends Piece{
 			//Est
 			if (y < plate.getBoardSize()-1 && plate.getPiece(x, y+1).getColor()!=this.getColor())
 				accessibles.add(plate.getPiece(x, y+1));
-//			//Ouest
+			//			//Ouest
 			if (y > 0 && plate.getPiece(x, y-1).getColor()!=this.getColor())
 				accessibles.add(plate.getPiece(x, y-1));
-//			//Sud Est
-			if (x < 7 && y < plate.getBoardSize()-1 && plate.getPiece(x+1, y+1).getColor()!=this.getColor())
+			//			//Sud Est
+			if (x < plate.getHeight()-1 && y < plate.getBoardSize()-1 && plate.getPiece(x+1, y+1).getColor()!=this.getColor())
 				accessibles.add(plate.getPiece(x+1, y+1));
-//			//Sud Ouest
-			if (x < 7 && y > 0 && plate.getPiece(x+1, y-1).getColor()!=this.getColor())
+			//			//Sud Ouest
+			if (x < plate.getHeight()-1 && y > 0 && plate.getPiece(x+1, y-1).getColor()!=this.getColor())
 				accessibles.add(plate.getPiece(x+1, y-1));
-//			//Nord Est
+			//			//Nord Est
 			if (x > 0 && y < plate.getBoardSize()-1 && plate.getPiece(x-1, y+1).getColor()!=this.getColor())
 				accessibles.add(plate.getPiece(x-1, y+1));
-//			//Nord Ouest
+			//			//Nord Ouest
 			if (x > 0 && y > 0 && plate.getPiece(x-1, y-1).getColor()!=this.getColor())
 				accessibles.add(plate.getPiece(x-1, y-1));			
 			return accessibles;
 		}
-	}
-
-	@Override
-	boolean canMove(Piece piece) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
@@ -63,12 +57,6 @@ public class King extends Piece{
 			Icon img = new ImageIcon("./img/bking.png");
 			return img;
 		}
-	}
-
-	@Override
-	boolean move(Piece piece) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

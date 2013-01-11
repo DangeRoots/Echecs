@@ -38,12 +38,6 @@ public class Archbishop extends Piece {
 	}
 
 	@Override
-	boolean canMove(Piece piece) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public Icon getIcon() {
 		if (this.getColor()=="w")
 		{
@@ -57,15 +51,8 @@ public class Archbishop extends Piece {
 	}
 
 	@Override
-	boolean move(Piece piece) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-
+		System.out.println("Je suis une princesse ! et ma position est : " + getRow() + " " + getColumn());	
 	}
 
 }

@@ -11,11 +11,6 @@ import pieces.*;
 
 public class MoveTestsCase extends TestCase {
 
-	@Test
-//	public void test() {
-//		fail("Not yet implemented");
-//	}
-
 	public void testMoveKings() {
 		
 		Plate plateau = new Plate();
@@ -29,6 +24,8 @@ public class MoveTestsCase extends TestCase {
 		{
 			System.out.println("Row : " + dispo.get(i).getRow() +" Column : " + dispo.get(i).getColumn());
 		}	
+		// Placement en 0.7
+		assertEquals(3, dispo.size());
 	}
 
 	public void testMoveBishops() {
@@ -44,6 +41,8 @@ public class MoveTestsCase extends TestCase {
 		{
 			System.out.println("Row : " + dispo.get(i).getRow() +" Column : " + dispo.get(i).getColumn());
 		}
+		// Placement en 4.4
+		assertEquals(13, dispo.size());
 	}
 	
 	public void testMoveKnights() {
@@ -58,6 +57,8 @@ public class MoveTestsCase extends TestCase {
 		{
 			System.out.println("Row : " + dispo.get(i).getRow() +" Column : " + dispo.get(i).getColumn());
 		}	
+		// Placement en 3.5
+		assertEquals(8, dispo.size());
 	} 
 
 	public void testMovePawns() {
@@ -72,6 +73,8 @@ public class MoveTestsCase extends TestCase {
 		{
 			System.out.println("Row : " + dispo.get(i).getRow() +" Column : " + dispo.get(i).getColumn());
 		}
+		// Placement en 5.6
+		assertEquals(1, dispo.size());
 	}
 	
 	public void testMoveQueens() {
@@ -86,6 +89,8 @@ public class MoveTestsCase extends TestCase {
 		{
 			System.out.println("Row : " + dispo.get(i).getRow() +" Column : " + dispo.get(i).getColumn());
 		}
+		// Placement en 1.6
+		assertEquals(23, dispo.size());
 	}
 	
 	public void testMoveRooks() {
@@ -100,5 +105,8 @@ public class MoveTestsCase extends TestCase {
 		{
 			System.out.println("Row : " + dispo.get(i).getRow() +" Column : " + dispo.get(i).getColumn());
 		}
+		// Placement en 5.6
+		System.out.println(dispo.size());
+		assertEquals(14, dispo.size());
 	}
 }
